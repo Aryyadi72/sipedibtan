@@ -28,44 +28,61 @@
             <div class="col-sm-12 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <form class="mt-3 form-horizontal">
+                        <form class="mt-3 form-horizontal" action="{{ route('lainnya.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group row">
-                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Nama</label>
+                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Tanggal</label>
                                 <div class="col-sm-11">
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
+                                    <input type="date" class="form-control" name="tanggal">
                                 </div>
 
                                 <br><br><br>
 
-                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Bibit</label>
+                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Kegiatan</label>
                                 <div class="col-sm-11">
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="kegiatan">
                                 </div>
 
                                 <br><br><br>
 
-                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Jumlah</label>
+                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Pelaksana</label>
                                 <div class="col-sm-11">
-                                    <input type="number" class="form-control" placeholder="name@example.com">
+                                    <input type="text" class="form-control" name="pelaksana">
                                 </div>
 
-                                <br><br>
+                                <br><br><br>
+
+                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Lokasi</label>
+                                <div class="col-sm-11">
+                                    <input type="text" class="form-control" name="lokasi">
+                                </div>
+
+                                <br><br><br>
+
+                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Foto</label>
+                                <div class="col-sm-11">
+                                    <input type="file" class="form-control-file" id="exampleInputFile" name="foto">
+                                </div>
+
+                                <br><br><br>
+
+                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Inputed By</label>
+                                <div class="col-sm-11">
+                                    <input type="text" class="form-control" name="inputed_by">
+                                </div>
+
+                                <br><br><br>
+
+                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Keterangan</label>
+                                <div class="col-sm-11">
+                                    <textarea class="form-control" rows="3" name="keterangan"></textarea>
+                                </div>
+
+                                <br><br><br><br>
 
                                 <div class="col-12 align-self-center">
                                     <div class="customize-input float-right">
-                                        <button type="button" class="btn btn-primary btn-rounded">Submit</button>
+                                        <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
                                     </div>
                                 </div>
                             </div>

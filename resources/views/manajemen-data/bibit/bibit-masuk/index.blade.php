@@ -18,7 +18,7 @@
             </div>
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
-                    <a href="{{ route('masuk.create') }}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Tambah</a>
+                    <button type="button" data-toggle="modal" data-target="#add-bibit-masuk" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Tambah</button>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                                     @foreach ($data as $key => $bm)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $bm->bibit }}</td>
+                                            <td>{{ $bm->bibit->bibit }}</td>
                                             <td>{{ $bm->stok }}</td>
                                             <td>{{ $bm->inputed_by }}</td>
                                             <td class="text-center">
@@ -78,11 +78,16 @@
                     <div class="modal-body">
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="bibit_id">
+                            <select class="form-control" id="exampleFormControlSelect1" name="bibit_id">
+                                <option selected disabled>Pilih Bibit</option>
+                                @foreach ($bibit as $bibit)
+                                    <option value="{{ $bibit->id }}">{{ $bibit->bibit }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Stok</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="stok">
+                            <input type="number" class="form-control" name="stok">
                         </div>
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Diinputkan oleh</label>
                         <div class="col-sm-12">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bibit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BibitMasuk;
+use App\Models\Bibit;
 
 class BibitMasukController extends Controller
 {
@@ -12,9 +13,11 @@ class BibitMasukController extends Controller
     {
         $title = "Bibit Masuk";
         $data = BibitMasuk::all();
+        $bibit = Bibit::all();
         $data = [
             'title' => $title,
-            'data' => $data
+            'data' => $data,
+            'bibit' => $bibit
         ];
         return view('manajemen-data.bibit.bibit-masuk.index', $data);
     }
@@ -23,7 +26,7 @@ class BibitMasukController extends Controller
     {
         $title = "Bibit Masuk - Tambah";
         $data = [
-            'title' => $title
+            'title' => $title,
         ];
         return view('manajemen-data.bibit.bibit-masuk.create', $data);
     }

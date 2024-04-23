@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Biodata;
 use Illuminate\Http\Request;
 
 class BiodataController extends Controller
@@ -10,8 +11,10 @@ class BiodataController extends Controller
     public function index()
     {
         $title = "Biodata Pengguna";
+        $data = Biodata::all();
         $data = [
-            'title' => $title
+            'title' => $title,
+            'data' => $data
         ];
         return view('manajemen-data.user.biodata-user.index', $data);
     }
@@ -26,12 +29,49 @@ class BiodataController extends Controller
     }
 
 
-    public function edit()
+    public function edit($id)
     {
         $title = "Biodata Pengguna - Edit";
+        $data = Biodata::findOrFail($id);
         $data = [
-            'title' => $title
+            'title' => $title,
+            'data' => $data
         ];
         return view('manajemen-data.user.biodata-user.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
+            'umur' => 'required|numeric',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'no_ktp' => 'required|numeric|unique:biodata,no_ktp,' . $id,
+            'no_telpon' => 'required',
+            'pendidikan' => 'required',
+            'agama' => 'required',
+            'domisili' => 'required',
+        ]);
+
+        $biodata = Biodata::findOrFail($id);
+
+        $biodata->update([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'umur' => $request->umur,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'no_ktp' => $request->no_ktp,
+            'no_telpon' => $request->no_telpon,
+            'pendidikan' => $request->pendidikan,
+            'agama' => $request->agama,
+            'domisili' => $request->domisili,
+        ]);
+
+        return redirect()->route('biodata.index')->with('success', 'Data biodata berhasil diperbarui.');
     }
 }

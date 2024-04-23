@@ -38,18 +38,22 @@
                                         <th>Bibit</th>
                                         <th>Jumlah</th>
                                         <th>Diinputkan oleh</th>
+                                        <th>Keterangan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($data as $key => $bk)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $bk->tanggal }}</td>
+                                        <td>{{ $bk->bibit->bibit }}</td>
+                                        <td>{{ $bk->jumlah }}</td>
+                                        <td>{{ $bk->inputed_by }}</td>
+                                        <td>{{ $bk->keterangan }}</td>
                                         <td></td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

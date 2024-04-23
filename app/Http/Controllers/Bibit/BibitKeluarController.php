@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bibit;
 
 use App\Http\Controllers\Controller;
+use App\Models\BibitKeluar;
 use Illuminate\Http\Request;
 
 class BibitKeluarController extends Controller
@@ -10,8 +11,10 @@ class BibitKeluarController extends Controller
     public function index()
     {
         $title = "Bibit Keluar";
+        $data = BibitKeluar::all();
         $data = [
             'title' => $title,
+            'data' => $data
         ];
         return view('manajemen-data.bibit.bibit-keluar.index', $data);
     }
