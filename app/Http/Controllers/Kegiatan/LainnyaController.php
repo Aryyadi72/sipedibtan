@@ -119,4 +119,9 @@ class LainnyaController extends Controller
 
         return redirect()->route('lainnya.index');
     }
+
+    public function a()
+    {
+
+    }
 }
