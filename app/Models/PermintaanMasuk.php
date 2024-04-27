@@ -12,7 +12,7 @@ class PermintaanMasuk extends Model
     protected $table = 'permintaan_masuk';
 
     protected $fillable = [
-        'user_id',
+        'users_id',
         'bibit_id',
         'jumlah',
         'status',
@@ -20,7 +20,7 @@ class PermintaanMasuk extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'users_id');
     }
 
     public function bibit()

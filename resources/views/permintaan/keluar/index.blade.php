@@ -16,11 +16,6 @@
                     </nav>
                 </div>
             </div>
-            <div class="col-5 align-self-center">
-                <div class="customize-input float-right">
-                    <a href="{{ route('masuk.create') }}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Tambah</a>
-                </div>
-            </div>
         </div>
     </div>
     <div class="container-fluid">
@@ -39,19 +34,19 @@
                                         <th>Bibit</th>
                                         <th>Jumlah</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @foreach ($datapk as $key => $pk)
+                                        <tr>
+                                            <td class="text-center">{{ $key + 1 }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($pk->keluar_tgl)->format('d-m-Y') }}</td>
+                                            <td>{{ $pk->nama }}</td>
+                                            <td>{{ $pk->bibit }}</td>
+                                            <td>{{ $pk->jumlah }}</td>
+                                            <td>{{ $pk->status }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

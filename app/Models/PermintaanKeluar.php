@@ -12,13 +12,13 @@ class PermintaanKeluar extends Model
     protected $table = 'permintaan_keluar';
 
     protected $fillable = [
-        'user_id',
+        'users_id',
         'permintaan_masuk_id',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'users_id');
     }
 
     public function permintaan_masuk()

@@ -48,7 +48,7 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->level }}</td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-user"><i class="fa fa-edit"></i></button>
+                                                <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-user-{{ $user->id }}"><i class="fa fa-edit"></i></button>
                                                 <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-user"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
@@ -119,8 +119,8 @@
 
     <!-- Update -->
     @foreach ($data as $user)
-    <div id="edit-user" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+    <div id="edit-user-{{ $user->id }}" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="edit-user-{{ $user->id }}-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-warning">

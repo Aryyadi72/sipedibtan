@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Bibit\BibitController;
 use App\Http\Controllers\Bibit\BibitMasukController;
 use App\Http\Controllers\Bibit\BibitKeluarController;
@@ -19,6 +20,8 @@ use App\Http\Controllers\Kegiatan\PenanamanController;
 use App\Http\Controllers\Kegiatan\PembagianController;
 use App\Http\Controllers\Kegiatan\LainnyaController;
 
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,9 +39,24 @@ use App\Http\Controllers\Kegiatan\LainnyaController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
-Route::get('/login', [LoginController::class, 'index'])->name('login-page');
-Route::get('/register', [RegisterController::class, 'index'])->name('register-page');
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Login
+Route::get('/login', function () {
+    return view('auth.login', ['title' => 'Login - SIPEDIBTAN']);
+})->name('login');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('auth-authenticate');
+
+// Register
+Route::get('/register', [AuthController::class, 'register'])->name('register-page');
+Route::post('/register', [AuthController::class, 'store'])->name('register-store');
+
+// Logout
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');
+
+// Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::prefix('permintaan')->group(function () {
     Route::resource('masuk', MasukController::class)->names([
@@ -57,24 +75,6 @@ Route::prefix('permintaan')->group(function () {
         'edit' => 'diproses.edit',
         'update' => 'diproses.update',
         'delete' => 'diproses.delete',
-    ]);
-
-    Route::resource('keluar', KeluarController::class)->names([
-        'index' => 'keluar.index',
-        'create' => 'keluar.create',
-        'store' => 'keluar.store',
-        'edit' => 'keluar.edit',
-        'update' => 'keluar.update',
-        'delete' => 'keluar.delete',
-    ]);
-
-    Route::resource('dibatalkan', DibatalkanController::class)->names([
-        'index' => 'dibatalkan.index',
-        'create' => 'dibatalkan.create',
-        'store' => 'dibatalkan.store',
-        'edit' => 'dibatalkan.edit',
-        'update' => 'dibatalkan.update',
-        'delete' => 'dibatalkan.delete',
     ]);
 });
 
@@ -157,3 +157,9 @@ Route::prefix('kegiatan')->group(function () {
     ]);
 
 });
+
+Route::get('/keluar', [KeluarController::class, 'index'])->name('keluar.index');
+Route::post('keluar/store/{id}', [KeluarController::class, 'store'])->name('keluar.store');
+
+Route::get('/batal', [DibatalkanController::class, 'index'])->name('batal.index');
+Route::post('batal/store/{id}', [DibatalkanController::class, 'store'])->name('batal.store');

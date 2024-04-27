@@ -15,9 +15,9 @@ class UserController extends Controller
     {
         $title = "User";
         $data = DB::table('users')
-                ->join('biodata', 'users.id', '=', 'biodata.users_id')
-                ->select('users.*', 'biodata.nama as nama_biodata')
-                ->get();
+            ->join('biodata', 'users.id', '=', 'biodata.users_id')
+            ->select('users.id as id_user', 'users.*', 'biodata.nama as nama_biodata')
+            ->get();
         $data = [
             'title' => $title,
             'data' => $data

@@ -42,7 +42,7 @@ class LainnyaController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            $imageName = time().'.'.$request->foto->extension();
+            $imageName = time() . '.' . $request->foto->extension();
             $request->foto->move(public_path('lainnya'), $imageName);
         } else {
             return redirect()->back()->withInput()->withErrors(['foto' => 'Foto harus diunggah.']);
@@ -91,7 +91,7 @@ class LainnyaController extends Controller
                 Storage::delete($kegiatan->foto);
             }
 
-            $imageName = time().'.'.$request->foto->extension();
+            $imageName = time() . '.' . $request->foto->extension();
             $request->foto->move(public_path('lainnya'), $imageName);
             $fotoName = $imageName;
         } else {
@@ -118,10 +118,5 @@ class LainnyaController extends Controller
         $bibit->delete();
 
         return redirect()->route('lainnya.index');
-    }
-
-    public function a()
-    {
-
     }
 }

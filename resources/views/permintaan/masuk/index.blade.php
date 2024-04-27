@@ -18,7 +18,7 @@
             </div>
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
-                    <a href="{{ route('masuk.create') }}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Tambah</a>
+                    <button type="button" data-toggle="modal" data-target="#add-pm" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Tambah</button>
                 </div>
             </div>
         </div>
@@ -43,15 +43,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @foreach ($datapm as $key => $pm)
+                                        <tr>
+                                            <td class="text-center">{{ $key + 1 }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($pm->masuk_tgl)->format('d-m-Y') }}</td>
+                                            <td>{{ $pm->nama }}</td>
+                                            <td>{{ $pm->bibit }}</td>
+                                            <td>{{ $pm->jumlah }}</td>
+                                            <td>{{ $pm->status }}</td>
+                                            <td class="text-center">
+                                                <div style="display: inline-block;">
+                                                    <form action="{{ route('keluar.store', ['id' => $pm->masuk_id]) }}" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-warning btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }}><i data-feather="external-link" class="feather-icon"></i></button>
+                                                    </form>
+                                                </div>
+                                                <div style="display: inline-block;">
+                                                    <form action="{{ route('batal.store', ['id' => $pm->masuk_id]) }}" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }}><i data-feather="x" class="feather-icon"></i></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -60,4 +75,53 @@
             </div>
         </div>
     </div>
+
+    <!-- Create -->
+    <div id="add-pm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-primary">
+                    <h4 class="modal-title" id="primary-header-modalLabel">Tambah Permintaan Masuk
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                </div>
+                <form action="{{ route('masuk.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="exampleFormControlSelect1" name="bibit_id" required>
+                                <option selected disabled>Pilih Bibit</option>
+                                @foreach ($bibit as $item)
+                                    @php
+                                        $stok = \App\Models\BibitMasuk::where('bibit_id', $item->id)->sum('stok');
+                                    @endphp
+                                    <option value="{{ $item->id }}" {{ $stok == 0 ? 'disabled' : '' }}>
+                                        {{ $item->bibit }} {{ $stok == 0 ? '(Stok Habis)' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Jumlah</label>
+                        <div class="col-sm-12">
+                            <input type="number" class="form-control" name="jumlah" required>
+                        </div>
+
+                        <input type="hidden" class="form-control" name="status" value="Masuk">
+                        <input type="hidden" class="form-control" name="users_id" value="{{ auth()->user()->id }}">
+                        <input type="hidden" class="form-control" name="inputed_by" value="{{ $biodata->nama }}">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @endsection

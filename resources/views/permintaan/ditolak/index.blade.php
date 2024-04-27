@@ -16,11 +16,6 @@
                     </nav>
                 </div>
             </div>
-            <div class="col-5 align-self-center">
-                <div class="customize-input float-right">
-                    <a href="{{ route('masuk.create') }}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Tambah</a>
-                </div>
-            </div>
         </div>
     </div>
     <div class="container-fluid">
@@ -39,21 +34,19 @@
                                         <th>Bibit</th>
                                         <th>Jumlah</th>
                                         <th>Status</th>
-                                        <th>Catatan</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @foreach ($datapb as $key => $pb)
+                                        <tr>
+                                            <td class="text-center">{{ $key + 1 }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($pb->keluar_tgl)->format('d-m-Y') }}</td>
+                                            <td>{{ $pb->nama }}</td>
+                                            <td>{{ $pb->bibit }}</td>
+                                            <td>{{ $pb->jumlah }}</td>
+                                            <td>{{ $pb->status }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
