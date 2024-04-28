@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BibitMasuk;
 use App\Models\Bibit;
+use DB;
 
 class BibitMasukController extends Controller
 {
@@ -14,10 +15,12 @@ class BibitMasukController extends Controller
         $title = "Bibit Masuk";
         $data = BibitMasuk::all();
         $bibit = Bibit::all();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
             'data' => $data,
-            'bibit' => $bibit
+            'bibit' => $bibit,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.bibit.bibit-masuk.index', $data);
     }

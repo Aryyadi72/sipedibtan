@@ -9,6 +9,7 @@ use App\Models\Bibit;
 use App\Models\BibitKeluar;
 use App\Models\BibitMasuk;
 use Illuminate\Support\Facades\Storage;
+use DB;
 
 class PembagianController extends Controller
 {
@@ -16,9 +17,11 @@ class PembagianController extends Controller
     {
         $title = "Pembagian";
         $data = Pembagian::all();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'data' => $data
+            'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.pembagian.index', $data);
     }
@@ -27,9 +30,11 @@ class PembagianController extends Controller
     {
         $title = "Pembagian - Tambah";
         $bibit = Bibit::all();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'bibit' => $bibit
+            'bibit' => $bibit,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.pembagian.create', $data);
     }
@@ -88,10 +93,12 @@ class PembagianController extends Controller
         $title = "Pembagian - Edit";
         $bibit = Bibit::all();
         $data = Pembagian::findOrFail($id);
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
             'bibit' => $bibit,
-            'data' => $data
+            'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.pembagian.edit', $data);
     }

@@ -16,11 +16,6 @@
                     </nav>
                 </div>
             </div>
-            <div class="col-5 align-self-center">
-                <div class="customize-input float-right">
-                    <a href="{{ route('masuk.create') }}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Tambah</a>
-                </div>
-            </div>
         </div>
     </div>
     <div class="container-fluid">

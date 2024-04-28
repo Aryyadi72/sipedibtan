@@ -9,6 +9,7 @@ use App\Models\Bibit;
 use Illuminate\Support\Facades\Storage;
 use App\Models\BibitMasuk;
 use App\Models\BibitKeluar;
+use DB;
 
 class PenanamanController extends Controller
 {
@@ -16,9 +17,11 @@ class PenanamanController extends Controller
     {
         $title = "Penanaman";
         $data = Penanaman::all();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
             'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.penanaman.index', $data);
     }
@@ -27,9 +30,11 @@ class PenanamanController extends Controller
     {
         $title = "Penanaman - Tambah";
         $bibit = Bibit::all();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'bibit' => $bibit
+            'bibit' => $bibit,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.penanaman.create', $data);
     }
@@ -89,11 +94,13 @@ class PenanamanController extends Controller
     {
         $title = "Penanaman - Edit";
         $data = Penanaman::findOrFail($id);
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $bibit = Bibit::all();
         $data = [
             'title' => $title,
             'data' => $data,
-            'bibit' => $bibit
+            'bibit' => $bibit,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.penanaman.edit', $data);
     }

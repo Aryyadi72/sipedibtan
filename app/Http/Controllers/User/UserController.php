@@ -18,9 +18,11 @@ class UserController extends Controller
             ->join('biodata', 'users.id', '=', 'biodata.users_id')
             ->select('users.id as id_user', 'users.*', 'biodata.nama as nama_biodata')
             ->get();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'data' => $data
+            'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.user.user.index', $data);
     }

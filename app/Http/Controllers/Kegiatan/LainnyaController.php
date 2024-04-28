@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kegiatan;
 use Illuminate\Support\Facades\Storage;
+use DB;
 
 class LainnyaController extends Controller
 {
@@ -13,9 +14,11 @@ class LainnyaController extends Controller
     {
         $title = "Kegiatan";
         $data = Kegiatan::all();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'data' => $data
+            'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.lainnya.index', $data);
     }
@@ -23,8 +26,10 @@ class LainnyaController extends Controller
     public function create()
     {
         $title = "Kegiatan - Tambah";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
-            'title' => $title
+            'title' => $title,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.lainnya.create', $data);
     }
@@ -65,9 +70,11 @@ class LainnyaController extends Controller
     {
         $title = "Kegiatan - Edit";
         $data = Kegiatan::findOrFail($id);
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'data' => $data
+            'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.kegiatan.lainnya.edit', $data);
     }

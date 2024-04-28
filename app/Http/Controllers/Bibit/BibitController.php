@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bibit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bibit;
+use DB;
 
 class BibitController extends Controller
 {
@@ -12,9 +13,11 @@ class BibitController extends Controller
     {
         $title = "Jenis Bibit";
         $data = Bibit::all();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'data' => $data
+            'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.bibit.bibit.index', $data);
     }

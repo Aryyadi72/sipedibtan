@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Biodata;
 use Illuminate\Http\Request;
+use DB;
 
 class BiodataController extends Controller
 {
@@ -12,9 +13,11 @@ class BiodataController extends Controller
     {
         $title = "Biodata Pengguna";
         $data = Biodata::all();
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'data' => $data
+            'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.user.biodata-user.index', $data);
     }
@@ -33,9 +36,11 @@ class BiodataController extends Controller
     {
         $title = "Biodata Pengguna - Edit";
         $data = Biodata::findOrFail($id);
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
-            'data' => $data
+            'data' => $data,
+            'biodata' => $biodata
         ];
         return view('manajemen-data.user.biodata-user.edit', $data);
     }
