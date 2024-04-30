@@ -8,6 +8,7 @@ use App\Models\PermintaanKeluar;
 use App\Models\PermintaanMasuk;
 use App\Models\BibitMasuk;
 use DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KeluarController extends Controller
 {
@@ -22,6 +23,7 @@ class KeluarController extends Controller
             ->join('biodata', 'users.id', '=', 'biodata.users_id')
             ->select('permintaan_keluar.*', 'permintaan_masuk.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_keluar.id as keluar_id', 'permintaan_keluar.created_at as keluar_tgl')
             ->where('permintaan_masuk.status', 'Selesai')
+            ->orderby('permintaan_keluar.created_at', 'desc')
             ->get();
         $data = [
             'title' => $title,
@@ -72,5 +74,14 @@ class KeluarController extends Controller
         $permintaanMasuk->update(['status' => 'Selesai']);
 
         return redirect()->route('keluar.index')->with('success', 'Data penanaman berhasil disimpan.');
+    }
+
+    public function print(Request $request)
+    {
+        $masuk_id = $request->input('masuk_id');
+
+        $pdf = PDF::loadView('permintaan/masuk/print');
+
+        return $pdf->stream('document.pdf');
     }
 }

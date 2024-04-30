@@ -38,7 +38,6 @@
                                         <th>Jumlah</th>
                                         <th>Lokasi</th>
                                         <th>Keterangan</th>
-                                        <th>Koordinat</th>
                                         <th>Foto</th>
                                         <th>Diinputkan oleh</th>
                                         <th>Aksi</th>
@@ -52,7 +51,6 @@
                                             <td>{{ $pembagian->jumlah }}</td>
                                             <td>{{ $pembagian->lokasi }}</td>
                                             <td>{{ $pembagian->keterangan }}</td>
-                                            <td>{{ $pembagian->koordinat }}</td>
                                             <td>{{ $pembagian->foto }}</td>
                                             <td>{{ $pembagian->inputed_by }}</td>
                                             <td class="text-center">

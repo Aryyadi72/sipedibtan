@@ -71,13 +71,6 @@
 
                                 <br><br><br>
 
-                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Koordinat</label>
-                                <div class="col-sm-11">
-                                    <input type="text" class="form-control" name="koordinat">
-                                </div>
-
-                                <br><br><br>
-
                                 <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Foto</label>
                                 <div class="col-sm-11">
                                     <input type="file" class="form-control-file" id="exampleInputFile" name="foto">

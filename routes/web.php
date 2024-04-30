@@ -163,3 +163,7 @@ Route::post('keluar/store/{id}', [KeluarController::class, 'store'])->name('kelu
 
 Route::get('/batal', [DibatalkanController::class, 'index'])->name('batal.index');
 Route::post('batal/store/{id}', [DibatalkanController::class, 'store'])->name('batal.store');
+
+Route::post('cetak/store', [KeluarController::class, 'print'])->name('cetak.store');
+
+Route::post('filter', [MasukController::class, 'filter'])->name('filter');

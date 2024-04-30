@@ -40,7 +40,6 @@
                                         <th>Pelaksana</th>
                                         <th>Lokasi</th>
                                         <th>Keterangan</th>
-                                        <th>Koordinat</th>
                                         <th>Foto</th>
                                         <th>Diinputkan oleh</th>
                                         <th>Aksi</th>
@@ -56,7 +55,6 @@
                                             <td>{{ $penanaman->pelaksana }}</td>
                                             <td>{{ $penanaman->lokasi }}</td>
                                             <td>{{ $penanaman->keterangan }}</td>
-                                            <td>{{ $penanaman->koordinat }}</td>
                                             <td>{{ $penanaman->foto }}</td>
                                             <td>{{ $penanaman->inputed_by }}</td>
                                             <td class="text-center">

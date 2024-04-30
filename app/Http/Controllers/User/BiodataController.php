@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Biodata;
 use Illuminate\Http\Request;
 use DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BiodataController extends Controller
 {
@@ -47,6 +48,9 @@ class BiodataController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user = auth()->user();
+        $level = $user->level;
+
         $request->validate([
             'nama' => 'required',
             'alamat' => 'required',
@@ -77,6 +81,13 @@ class BiodataController extends Controller
             'domisili' => $request->domisili,
         ]);
 
-        return redirect()->route('biodata.index')->with('success', 'Data biodata berhasil diperbarui.');
+        if ($level == 'User') {
+            Alert::success('Success!', 'Data biodata berhasil diperbarui.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Data biodata berhasil diperbarui.');
+            return redirect()->route('biodata.index');
+        }
     }
+
 }

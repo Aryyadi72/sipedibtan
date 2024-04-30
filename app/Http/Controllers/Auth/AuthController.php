@@ -38,9 +38,14 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            $user = Auth::user();
 
-            return redirect()->intended('/dashboard');
+            if ($user->level === 'User') {
+                return redirect()->route('masuk.index');
+            } else {
+                $request->session()->regenerate();
+                return redirect()->intended('/dashboard');
+            }
         }
 
         return back()->withErrors([

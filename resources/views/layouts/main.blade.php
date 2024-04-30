@@ -39,15 +39,20 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-
+    @include('sweetalert::alert')
+    @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
+        <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+            data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+            @include('partials.header')
+            @include('partials.sidebar')
+            @yield('content')
+            @include('partials.footer')
+        </div>
+    @else
         @include('partials.header')
-        @include('partials.sidebar')
         @yield('content')
         @include('partials.footer')
-
-    </div>
+    @endif
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="{{ asset('main-assets/assets/libs/jquery/dist/jquery.min.js') }}"></script>

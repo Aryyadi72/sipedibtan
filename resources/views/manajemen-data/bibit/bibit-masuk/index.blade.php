@@ -48,8 +48,8 @@
                                             <td>{{ $bm->stok }}</td>
                                             <td>{{ $bm->inputed_by }}</td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-bibit-masuk"><i class="fa fa-edit"></i></button>
-                                                <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-bibit-masuk"><i class="fa fa-trash"></i></button>
+                                                <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-bibit-masuk-{{ $bm->id }}"><i class="fa fa-edit"></i></button>
+                                                <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-bibit-masuk-{{ $bm->id }}"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -89,10 +89,6 @@
                         <div class="col-sm-12">
                             <input type="number" class="form-control" name="stok">
                         </div>
-                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Diinputkan oleh</label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" name="inputed_by">
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light"
@@ -106,8 +102,8 @@
 
     <!-- Update -->
     @foreach ($data as $bm)
-    <div id="edit-bibit-masuk" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+    <div id="edit-bibit-masuk-{{ $bm->id }}" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="edit-bibit-masuk-{{ $bm->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-warning">
@@ -144,8 +140,8 @@
     </div><!-- /.modal -->
 
     <!-- Delete -->
-    <div id="delete-bibit-masuk" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+    <div id="delete-bibit-masuk-{{ $bm->id }}" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="delete-bibit-masuk-{{ $bm->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-danger">

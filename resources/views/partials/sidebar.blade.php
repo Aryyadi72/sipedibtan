@@ -4,10 +4,23 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
+                        @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('dashboard') }}"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
+                        @endif
 
+                        @if (auth()->check() && (auth()->user()->level == 'User'))
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Permintaan</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link" href="{{ route('masuk.index') }}"
+                                aria-expanded="false"><i data-feather="inbox" class="feather-icon"></i><span
+                                    class="hide-menu">Permintaan Bibit
+                                </span></a>
+                        </li>
+                        @endif
+
+                        @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Permintaan</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link" href="{{ route('masuk.index') }}"
@@ -22,6 +35,7 @@
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('batal.index') }}"
                                 aria-expanded="false"><i data-feather="x" class="feather-icon"></i><span
                                     class="hide-menu">Permintaan Ditolak</span></a></li>
+                        @endif
 
                         @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
                         <li class="list-divider"></li>

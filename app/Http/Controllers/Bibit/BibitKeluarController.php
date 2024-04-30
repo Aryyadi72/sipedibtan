@@ -12,7 +12,7 @@ class BibitKeluarController extends Controller
     public function index()
     {
         $title = "Bibit Keluar";
-        $data = BibitKeluar::all();
+        $data = BibitKeluar::orderby('bibit_keluar.tanggal', 'desc')->get();
         $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,

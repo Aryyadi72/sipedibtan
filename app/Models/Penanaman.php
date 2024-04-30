@@ -17,7 +17,6 @@ class Penanaman extends Model
         'pelaksana',
         'lokasi',
         'keterangan',
-        'koordinat',
         'foto',
         'tanggal',
         'inputed_by'

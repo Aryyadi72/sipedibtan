@@ -16,7 +16,6 @@ class Pembagian extends Model
         'jumlah',
         'lokasi',
         'keterangan',
-        'koordinat',
         'foto',
         'inputed_by',
         'tanggal'

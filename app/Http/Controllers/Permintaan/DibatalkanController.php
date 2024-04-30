@@ -21,6 +21,7 @@ class DibatalkanController extends Controller
             ->join('biodata', 'users.id', '=', 'biodata.users_id')
             ->select('permintaan_keluar.*', 'permintaan_masuk.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_keluar.id as keluar_id', 'permintaan_keluar.created_at as keluar_tgl')
             ->where('permintaan_masuk.status', 'Batal')
+            ->orderby('permintaan_keluar.created_at', 'desc')
             ->get();
         $data = [
             'title' => $title,

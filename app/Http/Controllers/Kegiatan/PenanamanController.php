@@ -47,14 +47,13 @@ class PenanamanController extends Controller
             'pelaksana' => 'required',
             'lokasi' => 'required',
             'keterangan' => 'required',
-            'koordinat' => 'required',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'tanggal' => 'required',
             'inputed_by' => 'required',
         ]);
 
         if ($request->hasFile('foto')) {
-            $imageName = time().'.'.$request->foto->extension();
+            $imageName = time() . '.' . $request->foto->extension();
             $request->foto->move(public_path('images'), $imageName);
         } else {
             return redirect()->back()->withInput()->withErrors(['foto' => 'Foto harus diunggah.']);
@@ -81,7 +80,6 @@ class PenanamanController extends Controller
             'pelaksana' => $request->pelaksana,
             'lokasi' => $request->lokasi,
             'keterangan' => $request->keterangan,
-            'koordinat' => $request->koordinat,
             'foto' => $imageName,
             'tanggal' => $request->tanggal,
             'inputed_by' => $request->inputed_by,
@@ -113,7 +111,6 @@ class PenanamanController extends Controller
             'pelaksana' => 'required',
             'lokasi' => 'required',
             'keterangan' => 'required',
-            'koordinat' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'tanggal' => 'required',
             'inputed_by' => 'required',
@@ -126,7 +123,7 @@ class PenanamanController extends Controller
                 Storage::delete($penanaman->foto);
             }
 
-            $imageName = time().'.'.$request->foto->extension();
+            $imageName = time() . '.' . $request->foto->extension();
             $request->foto->move(public_path('images'), $imageName);
             $fotoName = $imageName;
         } else {
@@ -139,7 +136,6 @@ class PenanamanController extends Controller
             'pelaksana' => $request->pelaksana,
             'lokasi' => $request->lokasi,
             'keterangan' => $request->keterangan,
-            'koordinat' => $request->koordinat,
             'foto' => $fotoName,
             'tanggal' => $request->tanggal,
             'inputed_by' => $request->inputed_by,

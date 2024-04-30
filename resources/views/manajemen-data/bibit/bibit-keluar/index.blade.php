@@ -34,7 +34,6 @@
                                         <th>Jumlah</th>
                                         <th>Diinputkan oleh</th>
                                         <th>Keterangan</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,7 +45,6 @@
                                         <td>{{ $bk->jumlah }}</td>
                                         <td>{{ $bk->inputed_by }}</td>
                                         <td>{{ $bk->keterangan }}</td>
-                                        <td></td>
                                     </tr>
                                     @endforeach
                                 </tbody>

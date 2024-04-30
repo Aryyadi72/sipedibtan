@@ -8,6 +8,7 @@ use App\Models\Biodata;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -38,19 +39,20 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $level = auth()->user()->level;
+
         $request->validate([
             'nama' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required',
             'level' => 'required',
-            'inputed_by' => 'required',
         ]);
 
         $user = User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'level' => $request->level,
-            'inputed_by' => $request->inputed_by,
+            'inputed_by' => $level,
         ]);
 
         Biodata::create([
@@ -58,7 +60,13 @@ class UserController extends Controller
             'users_id' => $user->id,
         ]);
 
-        return redirect()->route('user.index')->with('success', 'Data pengguna berhasil disimpan.');
+        if ($user) {
+            Alert::success('Success!', 'Data user berhasil ditambahkan.');
+            return redirect()->route('user.index');
+        } else {
+            Alert::success('Success!', 'Data user gagal ditambahkan.');
+            return back();
+        }
     }
 
 
@@ -90,8 +98,29 @@ class UserController extends Controller
             $userData['password'] = Hash::make($request->password);
         }
 
-        $user->update($userData);
+        $userUp = $user->update($userData);
 
-        return redirect()->route('user.index')->with('success', 'Data pengguna berhasil diperbarui.');
+        if ($userUp) {
+            Alert::success('Success!', 'Data user berhasil diperbarui.');
+            return redirect()->route('user.index');
+        } else {
+            Alert::success('Success!', 'Data user gagal diperbarui.');
+            return back();
+        }
+    }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        $userDelete = $user->delete();
+
+        if ($userDelete) {
+            Alert::success('Success!', 'Data user berhasil dihapus.');
+            return redirect()->route('user.index');
+        } else {
+            Alert::error('Error!', 'Data user gagal dihapus.');
+            return redirect()->route('user.index');
+        }
     }
 }

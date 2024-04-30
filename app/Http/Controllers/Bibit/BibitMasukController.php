@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\BibitMasuk;
 use App\Models\Bibit;
 use DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BibitMasukController extends Controller
 {
     public function index()
     {
         $title = "Bibit Masuk";
-        $data = BibitMasuk::all();
+        $data = BibitMasuk::orderby('bibit_masuk.created_at', 'desc')->get();
         $bibit = Bibit::all();
         $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
@@ -36,13 +37,22 @@ class BibitMasukController extends Controller
 
     public function store(Request $request)
     {
-        BibitMasuk::create([
+        $user = auth()->user();
+        $level = $user->level;
+
+        $bmadd = BibitMasuk::create([
             'bibit_id' => $request->bibit_id,
             'stok' => $request->stok,
-            'inputed_by' => $request->inputed_by,
+            'inputed_by' => $level,
         ]);
 
-        return redirect()->route('bibit-masuk.index');
+        if ($bmadd) {
+            Alert::success('Success!', 'Data bibit masuk berhasil ditambahkan.');
+            return redirect()->route('bibit-masuk.index');
+        } else {
+            Alert::error('Error!', 'Data bibit masuk gagal ditambahkan.');
+            return redirect()->route('bibit-masuk.index');
+        }
     }
 
     public function edit()
@@ -57,20 +67,33 @@ class BibitMasukController extends Controller
     public function update(Request $request, $id)
     {
         $bibit = BibitMasuk::find($id);
-        $bibit->update([
+        $bmup = $bibit->update([
             'bibit_id' => $request->bibit_id,
             'stok' => $request->stok,
         ]);
 
-        return redirect()->route('bibit-masuk.index');
+        if ($bmup) {
+            Alert::success('Success!', 'Data bibit masuk berhasil diperbarui.');
+            return redirect()->route('bibit-masuk.index');
+        } else {
+            Alert::error('Error!', 'Data bibit masuk gagal diperbarui.');
+            return redirect()->route('bibit-masuk.index');
+        }
     }
 
     public function destroy($id)
     {
         $bibit = BibitMasuk::find($id);
 
-        $bibit->delete();
+        $bmdel = $bibit->delete();
 
-        return redirect()->route('bibit-masuk.index');
+        if ($bmdel) {
+            Alert::success('Success!', 'Data bibit masuk berhasil dihapus.');
+            return redirect()->route('bibit-masuk.index');
+        } else {
+            Alert::error('Error!', 'Data bibit masuk gagal dihapus.');
+            return redirect()->route('bibit-masuk.index');
+        }
+
     }
 }

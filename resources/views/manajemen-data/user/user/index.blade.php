@@ -49,7 +49,7 @@
                                             <td>{{ $user->level }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-user-{{ $user->id }}"><i class="fa fa-edit"></i></button>
-                                                <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-user"><i class="fa fa-trash"></i></button>
+                                                <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-user-{{ $user->id }}"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -99,11 +99,6 @@
                                 <option value="Admin">Admin</option>
                                 <option value="User">User</option>
                             </select>
-                        </div>
-
-                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Diinputkan oleh</label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" name="inputed_by">
                         </div>
 
                     </div>
@@ -166,8 +161,8 @@
     </div><!-- /.modal -->
 
     <!-- Delete -->
-    <div id="delete-user" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+    <div id="delete-user-{{ $user->id }}" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="delete-user-{{ $user->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-danger">
@@ -176,7 +171,7 @@
                     <button type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">×</button>
                 </div>
-                <form action="{{ route('bibit.destroy', $user->id) }}" method="POST">
+                <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <input type="hidden" class="form-control" name="id" value="{{ $user->id }}"><br>
