@@ -3,7 +3,8 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Fruitables - Vegetable Website Template</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('main-assets/assets/images/KPH_TANAH_LAUT.png') }}">
+        <title>SIPEDIBTAN - Sistem Informasi Pengelolaan Data Bibit & Kegiatan</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -973,9 +974,9 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Contact</h4>
-                            <p>Address: 1429 Netus Rd, NY 48247</p>
-                            <p>Email: Example@gmail.com</p>
-                            <p>Phone: +0123 4567 8910</p>
+                            <p>Alamat: Jln. A. Syairani No.36 Kab. Tanah Laut Kalimantan Selatan</p>
+                            <p>Email: kphtanahlaut@gmail.com</p>
+                            <p>Phone: +62 (0512) 21256</p>
                             <p>Payment Accepted</p>
                             <img src="img/payment.png" class="img-fluid" alt="">
                         </div>

@@ -40,4 +40,23 @@ class BibitKeluarController extends Controller
         return view('manajemen-data.bibit.bibit-keluar.edit', $data);
     }
 
+    public function filter(Request $request)
+    {
+        $title = "Bibit Keluar";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+
+        $data = BibitKeluar::whereDate('bibit_keluar.created_at', '>=', $startDate)
+            ->whereDate('bibit_keluar.created_at', '<=', $endDate)
+            ->orderby('bibit_keluar.created_at', 'desc')->get();
+
+        $data = [
+            'title' => $title,
+            'data' => $data,
+            'biodata' => $biodata
+        ];
+        return view('manajemen-data.bibit.bibit-keluar.index', $data);
+    }
+
 }

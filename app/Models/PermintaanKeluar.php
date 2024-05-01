@@ -14,6 +14,7 @@ class PermintaanKeluar extends Model
     protected $fillable = [
         'users_id',
         'permintaan_masuk_id',
+        'catatan'
     ];
 
     public function user()

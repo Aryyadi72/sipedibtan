@@ -49,6 +49,10 @@ Route::post('/login', [AuthController::class, 'authenticate'])->name('auth-authe
 Route::get('/register', [AuthController::class, 'register'])->name('register-page');
 Route::post('/register', [AuthController::class, 'store'])->name('register-store');
 
+// Forgot Password
+Route::get('/reset-pass', [AuthController::class, 'forgot_password'])->name('reset.index');
+Route::post('/send-link', [AuthController::class, 'send_link'])->name('reset.send');
+
 // Logout
 Route::post('/logout', function () {
     Auth::logout();
@@ -162,8 +166,15 @@ Route::get('/keluar', [KeluarController::class, 'index'])->name('keluar.index');
 Route::post('keluar/store/{id}', [KeluarController::class, 'store'])->name('keluar.store');
 
 Route::get('/batal', [DibatalkanController::class, 'index'])->name('batal.index');
-Route::post('batal/store/{id}', [DibatalkanController::class, 'store'])->name('batal.store');
+// Route::post('batal/store/{id}', [DibatalkanController::class, 'store'])->name('batal.store');
+Route::post('batal/store', [DibatalkanController::class, 'store'])->name('batal.store');
 
 Route::post('cetak/store', [KeluarController::class, 'print'])->name('cetak.store');
 
 Route::post('filter', [MasukController::class, 'filter'])->name('filter');
+Route::post('filter-masuk', [MasukController::class, 'filter_adm'])->name('filter.masuk');
+Route::post('filter-keluar', [MasukController::class, 'filter_adm_selesai'])->name('filter.keluar');
+Route::post('filter-batal', [MasukController::class, 'filter_adm_batal'])->name('filter.batal');
+
+Route::post('filter-bibit-masuk', [BibitMasukController::class, 'filter'])->name('filter.bibit.masuk');
+Route::post('filter-bibit-keluar', [BibitKeluarController::class, 'filter'])->name('filter.bibit.keluar');

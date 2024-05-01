@@ -80,7 +80,6 @@ class BibitMasukController extends Controller
             return redirect()->route('bibit-masuk.index');
         }
     }
-
     public function destroy($id)
     {
         $bibit = BibitMasuk::find($id);
@@ -95,5 +94,26 @@ class BibitMasukController extends Controller
             return redirect()->route('bibit-masuk.index');
         }
 
+    }
+
+    public function filter(Request $request)
+    {
+        $title = "Bibit Masuk";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+        $bibit = Bibit::all();
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+
+        $data = BibitMasuk::whereDate('bibit_masuk.created_at', '>=', $startDate)
+            ->whereDate('bibit_masuk.created_at', '<=', $endDate)
+            ->orderby('bibit_masuk.created_at', 'desc')->get();
+
+        $data = [
+            'title' => $title,
+            'data' => $data,
+            'bibit' => $bibit,
+            'biodata' => $biodata
+        ];
+        return view('manajemen-data.bibit.bibit-masuk.index', $data);
     }
 }

@@ -28,6 +28,45 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <form action="{{ route('filter.masuk') }}" method="POST">
+                            @csrf
+                            <div class="form-body">
+                                <div class="form-group row">
+                                    <label class="col-md-2">Filter Data </label>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="First Input &amp; First Row" name="start_date">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="Second Input &amp; First Row" name="end_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-info">Filter</button>
+                                    <button type="reset" class="btn btn-dark">Reset</button>
+                                    <button type="reset" class="btn btn-success">Export</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table id="multi_col_order"
                                 class="table table-striped table-bordered display no-wrap" style="width:100%">
@@ -74,10 +113,7 @@
                                                     </form>
                                                 </div>
                                                 <div style="display: inline-block;">
-                                                    <form action="{{ route('batal.store', ['id' => $pm->masuk_id]) }}" method="POST">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-danger btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }}><i data-feather="x" class="feather-icon"></i></button>
-                                                    </form>
+                                                    <button type="button" data-toggle="modal" data-target="#add-pb-{{ $pm->masuk_id }}" class="btn btn-danger btn-circle {{ $pm->status != 'Masuk' ? 'disabled' : '' }}"><i data-feather="x" class="feather-icon"></i></button>
                                                 </div>
                                                 <div style="display: inline-block;">
                                                     <form action="{{ route('batal.store', ['id' => $pm->masuk_id]) }}" method="POST">
@@ -145,4 +181,37 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    @foreach ($datapm as $pm)
+    <!-- Create Batal -->
+    <div id="add-pb-{{ $pm->masuk_id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-pb-{{ $pm->masuk_id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-danger">
+                    <h4 class="modal-title" id="primary-header-modalLabel">Tambahkan Catatan
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                </div>
+                <form action="{{ route('batal.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+
+                        <input type="hidden" class="form-control" name="pm_id" value="{{ $pm->masuk_id }}">
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Catatan</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="catatan" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Submit</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @endforeach
 @endsection

@@ -35,7 +35,8 @@
                                     {{-- <a href="{{ route('dashboard') }}" class="btn btn-block btn-dark">Login</a> --}}
                                 </div>
                                 <div class="col-lg-12 text-center mt-5">
-                                    Belum memiliki akun? <a href="{{ route('register-page') }}" class="text-danger">Register</a>
+                                    Belum memiliki akun? <a href="{{ route('register-page') }}" class="text-danger">Register</a><br>
+                                    Lupa password? <a href="{{ route('reset.index') }}" class="text-danger">Reset Password</a>
                                 </div>
                             </div>
                         </form>

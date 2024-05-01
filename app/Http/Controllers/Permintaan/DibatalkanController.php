@@ -50,19 +50,23 @@ class DibatalkanController extends Controller
         return view('permintaan.ditolak.edit', $data);
     }
 
-    public function store($id)
+    public function store(Request $request)
     {
-        $permintaanMasuk = PermintaanMasuk::findOrFail($id);
+        $pmId = $request->pm_id;
+        $catatan = $request->catatan;
+
+        $permintaanMasuk = PermintaanMasuk::findOrFail($pmId);
 
         $permintaanKeluar = new PermintaanKeluar();
         $permintaanKeluar->fill([
             'permintaan_masuk_id' => $permintaanMasuk->id,
             'users_id' => $permintaanMasuk->users_id,
+            'catatan' => $catatan,
         ]);
         $permintaanKeluar->save();
 
         $permintaanMasuk->update(['status' => 'Batal']);
 
-        return redirect()->route('keluar.index')->with('success', 'Data penanaman berhasil disimpan.');
+        return redirect()->route('batal.index')->with('success', 'Data penanaman berhasil disimpan.');
     }
 }

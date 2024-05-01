@@ -18,8 +18,6 @@ class MasukController extends Controller
         $user = auth()->user();
         $userId = $user->id;
 
-        // dd($userId);
-
         if ($user->level == 'User') {
             $title = "Permintaan Bibit - SIPEDIBTAN";
             $totalAll = PermintaanMasuk::where('users_id', $userId)->count();
@@ -30,8 +28,9 @@ class MasukController extends Controller
             $datapm = DB::table('permintaan_masuk')
                 ->join('bibit', 'permintaan_masuk.bibit_id', '=', 'bibit.id')
                 ->join('users', 'permintaan_masuk.users_id', '=', 'users.id')
+                ->join('permintaan_keluar', 'permintaan_masuk.id', '=', 'permintaan_keluar.permintaan_masuk_id')
                 ->join('biodata', 'users.id', '=', 'biodata.users_id')
-                ->select('permintaan_masuk.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl')
+                ->select('permintaan_masuk.*', 'permintaan_keluar.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl')
                 ->where('permintaan_masuk.users_id', $userId)
                 ->orderby('permintaan_masuk.created_at', 'desc')
                 ->get();
@@ -166,5 +165,88 @@ class MasukController extends Controller
         return view('permintaan.masuk.index-masyarakat', $data);
 
         // dd($startDate, $endDate, $bibitId, $status, $datapm);
+    }
+
+    public function filter_adm(Request $request)
+    {
+        $title = "Permintaan Masuk - SIPEDIBTAN";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+        $bibit = Bibit::all();
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+        $datapm = DB::table('permintaan_masuk')
+            ->join('bibit', 'permintaan_masuk.bibit_id', '=', 'bibit.id')
+            ->join('users', 'permintaan_masuk.users_id', '=', 'users.id')
+            ->join('biodata', 'users.id', '=', 'biodata.users_id')
+            ->select('permintaan_masuk.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl')
+            ->where('permintaan_masuk.status', 'Masuk')
+            ->whereDate('permintaan_masuk.created_at', '>=', $startDate)
+            ->whereDate('permintaan_masuk.created_at', '<=', $endDate)
+            ->orderby('permintaan_masuk.created_at', 'desc')
+            ->get();
+
+        $data = [
+            'title' => $title,
+            'biodata' => $biodata,
+            'bibit' => $bibit,
+            'datapm' => $datapm
+        ];
+        return view('permintaan.masuk.index', $data);
+    }
+
+    public function filter_adm_selesai(Request $request)
+    {
+        $title = "Permintaan Selesai - SIPEDIBTAN";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+        $bibit = Bibit::all();
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+        $datapk = DB::table('permintaan_keluar')
+            ->join('users', 'permintaan_keluar.users_id', '=', 'users.id')
+            ->join('permintaan_masuk', 'permintaan_keluar.permintaan_masuk_id', '=', 'permintaan_masuk.id')
+            ->join('bibit', 'permintaan_masuk.bibit_id', '=', 'bibit.id')
+            ->join('biodata', 'users.id', '=', 'biodata.users_id')
+            ->select('permintaan_keluar.*', 'permintaan_masuk.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_keluar.id as keluar_id', 'permintaan_keluar.created_at as keluar_tgl')
+            ->where('permintaan_masuk.status', 'Selesai')
+            ->whereDate('permintaan_masuk.created_at', '>=', $startDate)
+            ->whereDate('permintaan_masuk.created_at', '<=', $endDate)
+            ->orderby('permintaan_keluar.created_at', 'desc')
+            ->get();
+
+        $data = [
+            'title' => $title,
+            'biodata' => $biodata,
+            'bibit' => $bibit,
+            'datapk' => $datapk
+        ];
+        return view('permintaan.keluar.index', $data);
+    }
+
+    public function filter_adm_batal(Request $request)
+    {
+        $title = "Permintaan Batal - SIPEDIBTAN";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+        $bibit = Bibit::all();
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+        $datapb = DB::table('permintaan_keluar')
+            ->join('users', 'permintaan_keluar.users_id', '=', 'users.id')
+            ->join('permintaan_masuk', 'permintaan_keluar.permintaan_masuk_id', '=', 'permintaan_masuk.id')
+            ->join('bibit', 'permintaan_masuk.bibit_id', '=', 'bibit.id')
+            ->join('biodata', 'users.id', '=', 'biodata.users_id')
+            ->select('permintaan_keluar.*', 'permintaan_masuk.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_keluar.id as keluar_id', 'permintaan_keluar.created_at as keluar_tgl')
+            ->where('permintaan_masuk.status', 'Batal')
+            ->whereDate('permintaan_masuk.created_at', '>=', $startDate)
+            ->whereDate('permintaan_masuk.created_at', '<=', $endDate)
+            ->orderby('permintaan_keluar.created_at', 'desc')
+            ->get();
+
+        $data = [
+            'title' => $title,
+            'biodata' => $biodata,
+            'bibit' => $bibit,
+            'datapb' => $datapb
+        ];
+        return view('permintaan.ditolak.index', $data);
     }
 }

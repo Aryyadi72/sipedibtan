@@ -141,6 +141,7 @@
                                                 <th>Bibit</th>
                                                 <th>Jumlah</th>
                                                 <th>Status</th>
+                                                <th>Catatan</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -167,6 +168,11 @@
                                                         <button type="button" class="btn btn-danger btn-rounded"><i
                                                             class="fas fa-times-circle"></i> {{ $pm->status }}</button>
                                                         </td>
+                                                    @endif
+                                                    @if ($pm->catatan == null)
+                                                        <td>-</td>
+                                                    @else
+                                                        <td>{{ $pm->catatan }}</td>
                                                     @endif
                                                     <td class="text-center">
                                                         <div style="display: inline-block;">

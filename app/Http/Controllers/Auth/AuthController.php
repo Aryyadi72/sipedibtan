@@ -94,4 +94,28 @@ class AuthController extends Controller
 
         return redirect('/login');
     }
+
+    public function forgot_password()
+    {
+        $title = "Reset Password - SIPEDIBTAN";
+        $data = [
+            'title' => $title
+        ];
+        return view('auth.forgot-password', $data);
+    }
+
+    public function send_link(Request $request)
+    {
+        $email = $request->email;
+
+        $checkMail = User::where('email', $email)->first();
+
+        if ($checkMail) {
+
+        } else {
+
+        }
+
+        dd($checkMail);
+    }
 }
