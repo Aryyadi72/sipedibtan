@@ -44,6 +44,7 @@
                                         <td>{{ $bio->jenis_kelamin }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('biodata.edit', $bio->id) }}" class="btn btn-warning btn-circle"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ route('biodata.detail', $bio->id) }}" class="btn btn-primary btn-circle"><i class="far fa-address-book"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

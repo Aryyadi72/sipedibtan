@@ -8,19 +8,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
 
 class SendLink extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $mailData;
+    public $user;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($mailData)
+    public function __construct(User $user)
     {
-        $this->mailData = $mailData;
+        $this->user = $user;
     }
 
     /**
@@ -29,7 +30,7 @@ class SendLink extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Link',
+            subject: 'Tautan Reset Password',
         );
     }
 
@@ -39,7 +40,7 @@ class SendLink extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'auth.reset-password',
         );
     }
 

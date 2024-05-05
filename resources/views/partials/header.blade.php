@@ -14,7 +14,7 @@
                                 <!-- Dark Logo icon -->
                                 <img src="{{ asset('main-assets/assets/images/KPH_TANAH_LAUT.png') }}" alt="homepage" class="dark-logo" height="50" width="50" />
                                 <!-- Light Logo icon -->
-                                <img src="{{ asset('main-assets/assets/images/KPH_TANAH_LAUT.png') }}" alt="homepage" class="light-logo" />
+                                <img src="{{ asset('main-assets/assets/images/KPH_TANAH_LAUT.png') }}" alt="homepage" class="light-logo" height="50" width="50" />
                             </b>
                             <!--End Logo icon -->
                             <!-- Logo text -->

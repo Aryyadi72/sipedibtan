@@ -28,12 +28,51 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <form action="{{ route('filter.kegiatan') }}" method="POST">
+                            @csrf
+                            <div class="form-body">
+                                <div class="form-group row">
+                                    <label class="col-md-2">Filter Data </label>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="First Input &amp; First Row" name="start_date">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="Second Input &amp; First Row" name="end_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-info">Filter</button>
+                                    <button type="reset" class="btn btn-dark">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table id="multi_col_order"
                                 class="table table-striped table-bordered display no-wrap" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Tanggal</th>
                                         <th>Kegiatan</th>
                                         <th>Pelaksana</th>
                                         <th>Lokasi</th>
@@ -47,11 +86,12 @@
                                     @foreach ($data as $key => $lainnya)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($lainnya->tanggal)->format('d-m-y') }}</td>
                                             <td>{{ $lainnya->kegiatan }}</td>
                                             <td>{{ $lainnya->pelaksana }}</td>
                                             <td>{{ $lainnya->lokasi }}</td>
                                             <td>{{ $lainnya->keterangan }}</td>
-                                            <td>{{ $lainnya->foto }}</td>
+                                            <td><img src="{{ asset('lainnya/' . $lainnya->foto) }}" alt="Foto Pembagian" height="100" width="100"></td>
                                             <td>{{ $lainnya->inputed_by }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('lainnya.edit', $lainnya->id) }}" class="btn btn-warning btn-circle"><i class="fa fa-edit"></i></a>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Kegiatan;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LainnyaController extends Controller
 {
@@ -53,7 +54,7 @@ class LainnyaController extends Controller
             return redirect()->back()->withInput()->withErrors(['foto' => 'Foto harus diunggah.']);
         }
 
-        Kegiatan::create([
+        $kegiatanAdd = Kegiatan::create([
             'kegiatan' => $request->kegiatan,
             'pelaksana' => $request->pelaksana,
             'lokasi' => $request->lokasi,
@@ -63,7 +64,13 @@ class LainnyaController extends Controller
             'inputed_by' => $request->inputed_by,
         ]);
 
-        return redirect()->route('lainnya.index')->with('success', 'Data pembagian berhasil disimpan.');
+        if (!$kegiatanAdd) {
+            Alert::error('Error!', 'Data kegiatan gagal ditambahkan.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Data kegiatan berhasil ditambahkan.');
+            return redirect()->route('lainnya.index');
+        }
     }
 
     public function edit($id)
@@ -105,7 +112,7 @@ class LainnyaController extends Controller
             $fotoName = $kegiatan->foto;
         }
 
-        $kegiatan->update([
+        $kegiatanUp = $kegiatan->update([
             'tanggal' => $request->tanggal,
             'kegiatan' => $request->kegiatan,
             'pelaksana' => $request->pelaksana,
@@ -115,15 +122,46 @@ class LainnyaController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-        return redirect()->route('lainnya.index')->with('success', 'Data berhasil diperbarui.');
+        if (!$kegiatanUp) {
+            Alert::error('Error!', 'Data kegiatan gagal diubah.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Data kegiatan berhasil diubah.');
+            return redirect()->route('lainnya.index');
+        }
     }
 
     public function destroy($id)
     {
         $bibit = Kegiatan::find($id);
 
-        $bibit->delete();
+        $kegiatanDel = $bibit->delete();
 
-        return redirect()->route('lainnya.index');
+        if (!$kegiatanDel) {
+            Alert::error('Error!', 'Data kegiatan gagal dihapus.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Data kegiatan berhasil dihapus.');
+            return redirect()->route('lainnya.index');
+        }
+    }
+
+    public function filter(Request $request)
+    {
+        $title = "Kegiatan - filter";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+
+        $data = Kegiatan::whereDate('kegiatan.tanggal', '>=', $startDate)
+            ->whereDate('kegiatan.tanggal', '<=', $endDate)
+            ->orderby('kegiatan.tanggal', 'desc')->get();
+
+        $data = [
+            'title' => $title,
+            'data' => $data,
+            'biodata' => $biodata
+        ];
+        return view('manajemen-data.kegiatan.lainnya.index', $data);
     }
 }

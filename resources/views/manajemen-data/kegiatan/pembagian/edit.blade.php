@@ -18,7 +18,7 @@
             </div>
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
-                    <a href="{{ route('masuk.index') }}" class="btn btn-warning btn-rounded"><i class="fas fa-angle-left"></i> Kembali</a>
+                    <a href="{{ route('pembagian.index') }}" class="btn btn-warning btn-rounded"><i class="fas fa-angle-left"></i> Kembali</a>
                 </div>
             </div>
         </div>
@@ -71,12 +71,7 @@
                                     <img src="{{ asset('pembagian/' . $data->foto) }}" alt="Foto" width="100px" height="100px"><br><br>
                                 </div>
 
-                                <br><br><br>
-
-                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Inputed By</label>
-                                <div class="col-sm-11">
-                                    <input type="text" class="form-control" name="inputed_by" value="{{ $data->inputed_by }}">
-                                </div>
+                                <input type="hidden" class="form-control" name="inputed_by" value="{{ $data->inputed_by }}">
 
                                 <br><br><br>
 

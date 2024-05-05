@@ -10,6 +10,7 @@ use App\Models\BibitKeluar;
 use App\Models\BibitMasuk;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PembagianController extends Controller
 {
@@ -46,7 +47,7 @@ class PembagianController extends Controller
             'jumlah' => 'required',
             'lokasi' => 'required',
             'keterangan' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif',
             'tanggal' => 'required',
             'inputed_by' => 'required',
         ]);
@@ -73,7 +74,7 @@ class PembagianController extends Controller
             ]);
         }
 
-        Pembagian::create([
+        $pembagianAdd = Pembagian::create([
             'bibit_id' => $request->bibit_id,
             'jumlah' => $request->jumlah,
             'lokasi' => $request->lokasi,
@@ -83,7 +84,13 @@ class PembagianController extends Controller
             'inputed_by' => $request->inputed_by,
         ]);
 
-        return redirect()->route('pembagian.index')->with('success', 'Data pembagian berhasil disimpan.');
+        if (!$pembagianAdd) {
+            Alert::error('Error!', 'Data pembagian gagal ditambahkan.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Data pembagian berhasil ditambahkan.');
+            return redirect()->route('pembagian.index');
+        }
     }
 
     public function edit($id)
@@ -127,7 +134,7 @@ class PembagianController extends Controller
             $fotoName = $pembagian->foto;
         }
 
-        $pembagian->update([
+        $pembagianUp = $pembagian->update([
             'bibit_id' => $request->bibit_id,
             'jumlah' => $request->jumlah,
             'lokasi' => $request->lokasi,
@@ -137,15 +144,46 @@ class PembagianController extends Controller
             'inputed_by' => $request->inputed_by,
         ]);
 
-        return redirect()->route('pembagian.index')->with('success', 'Data berhasil diperbarui.');
+        if (!$pembagianUp) {
+            Alert::error('Error!', 'Data pembagian gagal diperbarui.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Data pembagian berhasil diperbarui.');
+            return redirect()->route('pembagian.index');
+        }
     }
 
     public function destroy($id)
     {
         $bibit = Pembagian::find($id);
 
-        $bibit->delete();
+        $pembagianDel = $bibit->delete();
 
-        return redirect()->route('pembagian.index');
+        if (!$pembagianDel) {
+            Alert::error('Error!', 'Data pembagian gagal dihapus.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Data pembagian berhasil dihapus.');
+            return redirect()->route('pembagian.index');
+        }
+    }
+
+    public function filter(Request $request)
+    {
+        $title = "Pembagian - filter";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+
+        $data = Pembagian::whereDate('pembagian.tanggal', '>=', $startDate)
+            ->whereDate('pembagian.tanggal', '<=', $endDate)
+            ->orderby('pembagian.tanggal', 'desc')->get();
+
+        $data = [
+            'title' => $title,
+            'data' => $data,
+            'biodata' => $biodata
+        ];
+        return view('manajemen-data.kegiatan.pembagian.index', $data);
     }
 }

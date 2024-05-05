@@ -28,6 +28,44 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <form action="{{ route('filter.penanaman') }}" method="POST">
+                            @csrf
+                            <div class="form-body">
+                                <div class="form-group row">
+                                    <label class="col-md-2">Filter Data </label>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="First Input &amp; First Row" name="start_date">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="Second Input &amp; First Row" name="end_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-info">Filter</button>
+                                    <button type="reset" class="btn btn-dark">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table id="multi_col_order"
                                 class="table table-striped table-bordered display no-wrap" style="width:100%">
@@ -49,13 +87,13 @@
                                     @foreach ($data as $key => $penanaman)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $penanaman->tanggal }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($penanaman->tanggal)->format('d-m-y') }}</td>
                                             <td>{{ $penanaman->bibit->bibit }}</td>
                                             <td>{{ $penanaman->jumlah }}</td>
                                             <td>{{ $penanaman->pelaksana }}</td>
                                             <td>{{ $penanaman->lokasi }}</td>
                                             <td>{{ $penanaman->keterangan }}</td>
-                                            <td>{{ $penanaman->foto }}</td>
+                                            <td><img src="{{ asset('images/' . $penanaman->foto) }}" alt="Foto Penanaman" height="100" width="100"></td>
                                             <td>{{ $penanaman->inputed_by }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('penanaman.edit', $penanaman->id) }}" class="btn btn-warning btn-circle"><i class="fa fa-edit"></i></a>

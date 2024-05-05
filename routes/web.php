@@ -119,6 +119,7 @@ Route::prefix('user')->group(function () {
         'edit' => 'biodata.edit',
         'update' => 'biodata.update',
         'delete' => 'biodata.delete',
+        // 'detail' => 'biodata.detail',
     ]);
 
     Route::resource('user', UserController::class)->names([
@@ -178,3 +179,12 @@ Route::post('filter-batal', [MasukController::class, 'filter_adm_batal'])->name(
 
 Route::post('filter-bibit-masuk', [BibitMasukController::class, 'filter'])->name('filter.bibit.masuk');
 Route::post('filter-bibit-keluar', [BibitKeluarController::class, 'filter'])->name('filter.bibit.keluar');
+
+Route::post('filter-kegiatan', [LainnyaController::class, 'filter'])->name('filter.kegiatan');
+Route::post('filter-pembagian', [PembagianController::class, 'filter'])->name('filter.pembagian');
+Route::post('filter-penanaman', [PenanamanController::class, 'filter'])->name('filter.penanaman');
+
+Route::get('biodata-detail/{id}', [BiodataController::class, 'detail'])->name('biodata.detail');
+
+Route::get('export', [PenanamanController::class, 'export'])->name('penanaman.export');
+Route::post('export', [PenanamanController::class, 'export_process'])->name('export.process');

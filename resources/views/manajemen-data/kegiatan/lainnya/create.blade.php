@@ -64,12 +64,7 @@
                                     <input type="file" class="form-control-file" id="exampleInputFile" name="foto">
                                 </div>
 
-                                <br><br><br>
-
-                                <label for="inputHorizontalSuccess" class="col-sm-1 col-form-label">Inputed By</label>
-                                <div class="col-sm-11">
-                                    <input type="text" class="form-control" name="inputed_by">
-                                </div>
+                                    <input type="hidden" class="form-control" name="inputed_by" value="{{ $biodata->nama }}">
 
                                 <br><br><br>
 

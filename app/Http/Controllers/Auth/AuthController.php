@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\SendLink;
+use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
@@ -108,14 +111,20 @@ class AuthController extends Controller
     {
         $email = $request->email;
 
-        $checkMail = User::where('email', $email)->first();
+        $user = User::where('email', $email)->first();
 
-        if ($checkMail) {
+        if ($user) {
+            $token = \Illuminate\Support\Str::random(60);
 
+            $user->update(['remember_token' => $token]);
+
+            Mail::to($email)->send(new SendLink($user));
+
+            Alert::success('Success!', 'Tautan berhasil dikirmkan.');
+            return redirect()->route('auth.login');
         } else {
-
+            Alert::error('Error!', 'Email tidak ditemukan.');
+            return redirect()->back();
         }
-
-        dd($checkMail);
     }
 }

@@ -90,4 +90,17 @@ class BiodataController extends Controller
         }
     }
 
+    public function detail($id)
+    {
+        $title = "Biodata Pengguna - Detail";
+        $data = Biodata::findOrFail($id);
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+        $data = [
+            'title' => $title,
+            'data' => $data,
+            'biodata' => $biodata
+        ];
+        return view('manajemen-data.user.biodata-user.detail', $data);
+    }
+
 }

@@ -28,12 +28,51 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <form action="{{ route('filter.pembagian') }}" method="POST">
+                            @csrf
+                            <div class="form-body">
+                                <div class="form-group row">
+                                    <label class="col-md-2">Filter Data </label>
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="First Input &amp; First Row" name="start_date">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        placeholder="Second Input &amp; First Row" name="end_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-info">Filter</button>
+                                    <button type="reset" class="btn btn-dark">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table id="multi_col_order"
                                 class="table table-striped table-bordered display no-wrap" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Tanggal</th>
                                         <th>Bibit</th>
                                         <th>Jumlah</th>
                                         <th>Lokasi</th>
@@ -47,11 +86,12 @@
                                     @foreach ($data as $key => $pembagian)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($pembagian->tanggal)->format('d-m-y') }}</td>
                                             <td>{{ $pembagian->bibit->bibit }}</td>
                                             <td>{{ $pembagian->jumlah }}</td>
                                             <td>{{ $pembagian->lokasi }}</td>
                                             <td>{{ $pembagian->keterangan }}</td>
-                                            <td>{{ $pembagian->foto }}</td>
+                                            <td><img src="{{ asset('pembagian/' . $pembagian->foto) }}" alt="Foto Pembagian" height="100" width="100"></td>
                                             <td>{{ $pembagian->inputed_by }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('pembagian.edit', $pembagian->id) }}" class="btn btn-warning btn-circle"><i class="fa fa-edit"></i></a>
