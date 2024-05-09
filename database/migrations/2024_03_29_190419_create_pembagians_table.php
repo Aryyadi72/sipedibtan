@@ -16,9 +16,9 @@ return new class extends Migration {
             $table->integer('jumlah');
             $table->string('lokasi');
             $table->string('keterangan');
-            $table->string('koordinat');
             $table->string('foto');
             $table->string('inputed_by');
+            $table->date('tanggal');
             $table->timestamps();
 
             $table->foreign('bibit_id')->references('id')->on('bibit')->onDelete('cascade')->onUpdate('cascade');

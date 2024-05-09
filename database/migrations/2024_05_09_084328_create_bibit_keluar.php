@@ -10,11 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('jenis', function (Blueprint $table) {
+        Schema::create('bibit_keluar', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis');
+            $table->unsignedBigInteger('bibit_id')->index();
+            $table->date('tanggal');
+            $table->integer('jumlah');
+            $table->string('keterangan');
             $table->string('inputed_by');
             $table->timestamps();
+
+            $table->foreign('bibit_id')->references('id')->on('bibit')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -23,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('jenis');
+        Schema::dropIfExists('bibit_keluar');
     }
 };

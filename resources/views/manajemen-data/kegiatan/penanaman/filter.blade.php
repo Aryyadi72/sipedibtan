@@ -23,7 +23,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('export.process') }}" method="POST">
+                        <form action="{{ route('filter.result') }}" method="POST">
                             @csrf
                             <div class="form-body">
                                 <div class="form-group row">

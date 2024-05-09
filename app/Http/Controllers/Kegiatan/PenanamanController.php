@@ -250,6 +250,61 @@ class PenanamanController extends Controller
         return $monthNamesIndo[$namaBulan] ?? $namaBulan;
     }
 
+    private function translateDayToIndonesian($englishDay)
+    {
+        $days = [
+            'Sunday' => 'Minggu',
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu',
+        ];
+
+        return $days[$englishDay];
+    }
+
+    public function filter_result(Request $request)
+    {
+        $title = "Penanaman & Pembagian - Filter";
+        $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+
+        $tahun = request()->input('tahun');
+
+        $namaBulan = request()->input('bulan');
+        $englishMonth = $this->translateMonthToEnglish($namaBulan);
+        $bulan = date('m', strtotime($englishMonth));
+
+        $startDate = Carbon::createFromDate($tahun, $bulan, 1)->startOfMonth();
+        $endDate = $startDate->copy()->endOfMonth();
+
+        $dataPenanaman = Penanaman::whereBetween('tanggal', [$startDate, $endDate])->get();
+        $dataPembagian = Pembagian::whereBetween('tanggal', [$startDate, $endDate])->get();
+
+        $penanamanWithDay = [];
+        foreach ($dataPenanaman as $penanaman) {
+            $penanaman->hari = $this->translateDayToIndonesian(Carbon::parse($penanaman->tanggal)->englishDayOfWeek);
+            $penanaman->tanggalFormat = Carbon::parse($penanaman->tanggal)->format('d-m-Y');
+            $penanamanWithDay[] = $penanaman;
+        }
+
+        $pembagianWithDay = [];
+        foreach ($dataPembagian as $pembagian) {
+            $pembagian->hari = $this->translateDayToIndonesian(Carbon::parse($pembagian->tanggal)->englishDayOfWeek);
+            $pembagian->tanggalFormat = Carbon::parse($pembagian->tanggal)->format('d-m-Y');
+            $pembagianWithDay[] = $pembagian;
+        }
+
+        $data = [
+            'title' => $title,
+            'biodata' => $biodata,
+            'dataPenanaman' => $penanamanWithDay,
+            'dataPembagian' => $pembagianWithDay,
+        ];
+        return view('manajemen-data.kegiatan.penanaman.filter-result', $data);
+    }
+
     public function export_process(Request $request)
     {
         return Excel::download(new PenanamanPembagianExport(), 'data.xlsx');

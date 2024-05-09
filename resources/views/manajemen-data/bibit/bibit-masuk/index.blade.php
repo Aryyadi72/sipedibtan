@@ -16,11 +16,13 @@
                     </nav>
                 </div>
             </div>
+            @if (auth()->check() && (auth()->user()->level == 'Admin'))
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
                     <button type="button" data-toggle="modal" data-target="#add-bibit-masuk" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Tambah</button>
                 </div>
             </div>
+            @endif
         </div>
     </div>
     <div class="container-fluid">
@@ -76,7 +78,9 @@
                                         <th>Bibit</th>
                                         <th>Stok</th>
                                         <th>Diinputkan oleh</th>
+                                        @if (auth()->check() && (auth()->user()->level == 'Admin'))
                                         <th>Aksi</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,10 +90,12 @@
                                             <td>{{ $bm->bibit->bibit }}</td>
                                             <td>{{ $bm->stok }}</td>
                                             <td>{{ $bm->inputed_by }}</td>
+                                            @if (auth()->check() && (auth()->user()->level == 'Admin'))
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-bibit-masuk-{{ $bm->id }}"><i class="fa fa-edit"></i></button>
                                                 <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-bibit-masuk-{{ $bm->id }}"><i class="fa fa-trash"></i></button>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

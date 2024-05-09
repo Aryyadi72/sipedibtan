@@ -77,14 +77,18 @@ class AuthController extends Controller
             'inputed_by' => $request->inputed_by,
         ]);
 
-        Biodata::create([
+        $biodata = Biodata::create([
             'nama' => $request->nama,
             'users_id' => $user->id,
         ]);
 
-        // auth()->login($user);
-
-        return redirect()->route('login')->with('success', 'Registration successful! Please login to continue.');
+        if ($user && $biodata) {
+            Alert::success('Success!', 'Registrasi berhasil, silahkan login untuk melanjutkan.');
+            return redirect()->route('login');
+        } else {
+            Alert::error('Error!', 'Registrasi gagal, silahkan ulangi registrasi anda.');
+            return redirect()->route('register-page');
+        }
     }
 
     public function logout(Request $request)
@@ -125,6 +129,34 @@ class AuthController extends Controller
         } else {
             Alert::error('Error!', 'Email tidak ditemukan.');
             return redirect()->back();
+        }
+    }
+
+    public function checkEmail(Request $request)
+    {
+        $exists = User::where('email', $request->email)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
+
+    public function reset_password(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'new_password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        $user->password = Hash::make($request->new_password);
+        $userSave = $user->save();
+
+        if ($userSave) {
+            Alert::success('Success!', 'Password Anda berhasil direset. Silakan login.');
+            return redirect()->route('login');
+        } else {
+            Alert::error('Error!', 'Password Anda gagal direset. Silakan ulangi.');
+            return redirect()->route('reset.index');
         }
     }
 }

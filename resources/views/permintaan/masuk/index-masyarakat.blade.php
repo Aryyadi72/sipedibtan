@@ -187,13 +187,12 @@
                                                                 <button type="submit" class="btn btn-danger btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }}><i data-feather="x" class="feather-icon"></i></button>
                                                             </form>
                                                         </div>
-                                                        <div style="display: inline-block;">
-                                                            <form action="{{ route('cetak.store') }}" method="POST">
+                                                        {{-- <div style="display: inline-block;">
+                                                            <form action="{{ route('cetak.store', ['id' => $pm->masuk_id]) }}" method="POST">
                                                                 @csrf
-                                                                <input type="hidden" name="masuk_id" value="{{ $pm->masuk_id }}">
-                                                                <button type="submit" class="btn btn-primary btn-circle"><i data-feather="printer" class="feather-icon"></i></button>
+                                                                <button type="submit" class="btn btn-primary btn-circle" {{ $pm->status != 'Selesai' ? 'disabled' : '' }}><i data-feather="printer" class="feather-icon"></i></button>
                                                             </form>
-                                                        </div>
+                                                        </div> --}}
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -229,7 +228,7 @@
                                         $stok = \App\Models\BibitMasuk::where('bibit_id', $item->id)->sum('stok');
                                     @endphp
                                     <option value="{{ $item->id }}" {{ $stok == 0 ? 'disabled' : '' }}>
-                                        {{ $item->bibit }} {{ $stok == 0 ? '(Stok Habis)' : '' }}
+                                        {{ $item->bibit }} ({{ $stok }}) {{ $stok == 0 ? '(Stok Habis)' : '' }}
                                     </option>
                                 @endforeach
                             </select>

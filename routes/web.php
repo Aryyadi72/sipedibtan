@@ -51,7 +51,8 @@ Route::post('/register', [AuthController::class, 'store'])->name('register-store
 
 // Forgot Password
 Route::get('/reset-pass', [AuthController::class, 'forgot_password'])->name('reset.index');
-Route::post('/send-link', [AuthController::class, 'send_link'])->name('reset.send');
+Route::post('/reset-pass-auth', [AuthController::class, 'reset_password'])->name('reset.pass');
+Route::post('/check-email', [AuthController::class, 'checkEmail'])->name('check.email');
 
 // Logout
 Route::post('/logout', function () {
@@ -187,4 +188,4 @@ Route::post('filter-penanaman', [PenanamanController::class, 'filter'])->name('f
 Route::get('biodata-detail/{id}', [BiodataController::class, 'detail'])->name('biodata.detail');
 
 Route::get('export', [PenanamanController::class, 'export'])->name('penanaman.export');
-Route::post('export', [PenanamanController::class, 'export_process'])->name('export.process');
+Route::post('filter-result', [PenanamanController::class, 'filter_result'])->name('filter.result');

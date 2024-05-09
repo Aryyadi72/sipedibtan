@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('level', ['Admin', 'User', 'Inputer', ''])->nullable();
+            $table->enum('level', ['Admin', 'Petugas', 'Masyarakat', ''])->nullable();
             $table->string('inputed_by')->nullable();
             $table->timestamps();
         });

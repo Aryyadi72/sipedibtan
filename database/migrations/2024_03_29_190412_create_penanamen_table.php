@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('pelaksana');
             $table->string('lokasi');
             $table->string('keterangan');
-            $table->string('koordinat');
             $table->string('foto');
+            $table->date('tanggal');
             $table->string('inputed_by');
             $table->timestamps();
 
