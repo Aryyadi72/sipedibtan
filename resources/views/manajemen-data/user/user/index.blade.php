@@ -95,9 +95,9 @@
                         <div class="col-sm-12">
                             <select class="form-control" id="exampleFormControlSelect1" name="level">
                                 <option selected disabled>Pilih Level</option>
-                                <option value="Superadmin">Superadmin</option>
                                 <option value="Admin">Admin</option>
-                                <option value="User">User</option>
+                                <option value="Petugas">Petugas</option>
+                                <option value="Masyarakat">Masyarakat</option>
                             </select>
                         </div>
 
@@ -143,9 +143,9 @@
                         <div class="col-sm-12">
                             <select class="form-control" id="exampleFormControlSelect1" name="level">
                                 <option selected disabled>Pilih Level</option>
-                                <option value="Superadmin" {{ $user->level == 'Superadmin' ? 'selected' : '' }}>Superadmin</option>
+                                <option value="Petugas" {{ $user->level == 'Petugas' ? 'selected' : '' }}>Petugas</option>
                                 <option value="Admin" {{ $user->level == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="User" {{ $user->level == 'User' ? 'selected' : '' }}>User</option>
+                                <option value="Masyarakat" {{ $user->level == 'Masyarakat' ? 'selected' : '' }}>Masyarakat</option>
                             </select>
                         </div>
 

@@ -28,8 +28,8 @@
                                         <input class="form-control" type="password" placeholder="Masukkan password" name="password" required>
                                     </div>
                                 </div>
-                                <input class="form-control" type="hidden" name="level" value="User">
-                                <input class="form-control" type="hidden" name="inputed_by" value="User">
+                                <input class="form-control" type="hidden" name="level" value="Masyarakat">
+                                <input class="form-control" type="hidden" name="inputed_by" value="Masyarakat">
                                 <div class="col-lg-12 text-center">
                                     <button type="submit" class="btn btn-block btn-dark">Register</button>
                                 </div>

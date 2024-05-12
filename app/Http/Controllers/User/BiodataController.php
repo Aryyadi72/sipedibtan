@@ -81,7 +81,7 @@ class BiodataController extends Controller
             'domisili' => $request->domisili,
         ]);
 
-        if ($level == 'User') {
+        if ($level == 'Masyarakat') {
             Alert::success('Success!', 'Data biodata berhasil diperbarui.');
             return back();
         } else {

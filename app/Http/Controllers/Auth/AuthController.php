@@ -43,7 +43,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if ($user->level === 'User') {
+            if ($user->level === 'Masyarakat') {
                 return redirect()->route('masuk.index');
             } else {
                 $request->session()->regenerate();
