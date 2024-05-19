@@ -16,16 +16,21 @@ class BiodataController extends Controller
 
         $user = auth()->user()->level;
 
-        if ($user = 'Petugas') {
+        if ($user == 'Petugas') {
             $data = DB::table('biodata')
                 ->join('users', 'biodata.users_id', 'users.id')
+                ->select('biodata.*', 'biodata.id as bioid')
                 ->where('users.level', 'Masyarakat')
                 ->get();
         } else {
-            $data = Biodata::all();
+            $data = DB::table('biodata')
+                ->join('users', 'biodata.users_id', 'users.id')
+                ->select('biodata.*', 'biodata.id as bioid')
+                ->get();
         }
 
         $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+
         $data = [
             'title' => $title,
             'data' => $data,
