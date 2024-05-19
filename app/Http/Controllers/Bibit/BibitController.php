@@ -40,21 +40,60 @@ class BibitController extends Controller
         return view('manajemen-data.bibit.bibit.create', $data);
     }
 
+    // public function store(Request $request)
+    // {
+    //     $bibitCreate = Bibit::create([
+    //         'bibit' => $request->bibit,
+    //         'inputed_by' => $request->inputed_by,
+    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+
+    //     if ($bibitCreate) {
+    //         Alert::success('Success!', 'Data bibit berhasil ditambahkan.');
+    //         return redirect()->route('bibit.index');
+    //     } else {
+    //         Alert::error('Error!', 'Data bibit gagal ditambahkan.');
+    //         return redirect()->route('bibit.index');
+    //     }
+    // }
+
     public function store(Request $request)
     {
-        $bibitCreate = Bibit::create([
-            'bibit' => $request->bibit,
-            'inputed_by' => $request->inputed_by,
+        // Validasi input
+        $request->validate([
+            'bibit' => 'required|string|max:255',
+            'inputed_by' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'keterangan' => 'required|string|max:255',
         ]);
 
-        if ($bibitCreate) {
-            Alert::success('Success!', 'Data bibit berhasil ditambahkan.');
-            return redirect()->route('bibit.index');
+        // Menangani unggahan gambar
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+
+            // Menyimpan data bibit beserta nama file gambar
+            $bibitCreate = Bibit::create([
+                'bibit' => $request->bibit,
+                'inputed_by' => $request->inputed_by,
+                'image' => $imageName,
+                'keterangan' => $request->keterangan,
+            ]);
+
+            if ($bibitCreate) {
+                Alert::success('Success!', 'Data bibit berhasil ditambahkan.');
+                return redirect()->route('bibit.index');
+            } else {
+                Alert::error('Error!', 'Data bibit gagal ditambahkan.');
+                return redirect()->route('bibit.index');
+            }
         } else {
-            Alert::error('Error!', 'Data bibit gagal ditambahkan.');
+            Alert::error('Error!', 'Gagal mengunggah gambar.');
             return redirect()->route('bibit.index');
         }
     }
+
 
     public function edit()
     {

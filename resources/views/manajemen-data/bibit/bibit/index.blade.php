@@ -98,6 +98,18 @@
                         </div>
                         <input type="hidden" class="form-control" name="inputed_by" value="{{ $user->level }}">
                     </div>
+                    <div class="modal-body">
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Foto Bibit</label>
+                        <div class="col-sm-12">
+                            <input type="file" class="form-control" name="foto">
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Keterangan</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="keterangan">
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light"
                             data-dismiss="modal">Close</button>

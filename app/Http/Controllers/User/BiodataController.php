@@ -53,16 +53,7 @@ class BiodataController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'alamat' => 'required',
-            'jenis_kelamin' => 'required',
-            'umur' => 'required|numeric',
-            'tempat_lahir' => 'required',
-            'tanggal_lahir' => 'required|date',
             'no_ktp' => 'required|numeric|unique:biodata,no_ktp,' . $id,
-            'no_telpon' => 'required',
-            'pendidikan' => 'required',
-            'agama' => 'required',
-            'domisili' => 'required',
         ]);
 
         $biodata = Biodata::findOrFail($id);

@@ -13,6 +13,8 @@ class Bibit extends Model
 
     protected $fillable = [
         'bibit',
+        'foto',
+        'deskripsi',
         'inputed_by'
     ];
 }
