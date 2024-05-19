@@ -13,7 +13,18 @@ class BiodataController extends Controller
     public function index()
     {
         $title = "Biodata Pengguna";
-        $data = Biodata::all();
+
+        $user = auth()->user()->level;
+
+        if ($user = 'Petugas') {
+            $data = DB::table('biodata')
+                ->join('users', 'biodata.users_id', 'users.id')
+                ->where('users.level', 'Masyarakat')
+                ->get();
+        } else {
+            $data = Biodata::all();
+        }
+
         $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
         $data = [
             'title' => $title,
