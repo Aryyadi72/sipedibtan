@@ -113,16 +113,6 @@ Route::prefix('bibit')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
-    Route::resource('biodata', BiodataController::class)->names([
-        'index' => 'biodata.index',
-        'create' => 'biodata.create',
-        'store' => 'biodata.store',
-        'edit' => 'biodata.edit',
-        'update' => 'biodata.update',
-        'delete' => 'biodata.delete',
-        // 'detail' => 'biodata.detail',
-    ]);
-
     Route::resource('user', UserController::class)->names([
         'index' => 'user.index',
         'create' => 'user.create',
@@ -166,6 +156,13 @@ Route::prefix('kegiatan')->group(function () {
 
 Route::get('/keluar', [KeluarController::class, 'index'])->name('keluar.index');
 Route::post('keluar/store/{id}', [KeluarController::class, 'store'])->name('keluar.store');
+
+Route::get('biodata', [BiodataController::class, 'index'])->name('biodata.index');
+Route::get('biodata-create', [BiodataController::class, 'create'])->name('biodata.create');
+Route::post('biodata-store', [BiodataController::class, 'store'])->name('biodata.store');
+Route::get('biodata-edit/{id}', [BiodataController::class, 'edit'])->name('biodata.edit');
+Route::post('biodata-update/{id}', [BiodataController::class, 'update'])->name('biodata.update');
+Route::post('biodata-delete/{id}', [BiodataController::class, 'delete'])->name('biodata.destroy');
 
 Route::get('/batal', [DibatalkanController::class, 'index'])->name('batal.index');
 // Route::post('batal/store/{id}', [DibatalkanController::class, 'store'])->name('batal.store');
