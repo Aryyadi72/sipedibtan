@@ -57,7 +57,6 @@
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-info">Filter</button>
                                     <button type="reset" class="btn btn-dark">Reset</button>
-                                    <button type="reset" class="btn btn-success">Export</button>
                                 </div>
                             </div>
                         </form>

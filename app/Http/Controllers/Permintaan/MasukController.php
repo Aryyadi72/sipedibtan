@@ -18,7 +18,7 @@ class MasukController extends Controller
         $user = auth()->user();
         $userId = $user->id;
 
-        if ($user->level == 'User') {
+        if ($user->level == 'Masyarakat') {
             $title = "Permintaan Bibit - SIPEDIBTAN";
             $totalAll = PermintaanMasuk::where('users_id', $userId)->count();
             $totalMasuk = PermintaanMasuk::where('users_id', $userId)->where('status', 'Masuk')->count();
@@ -28,12 +28,13 @@ class MasukController extends Controller
             $datapm = DB::table('permintaan_masuk')
                 ->join('bibit', 'permintaan_masuk.bibit_id', '=', 'bibit.id')
                 ->join('users', 'permintaan_masuk.users_id', '=', 'users.id')
-                ->join('permintaan_keluar', 'permintaan_masuk.id', '=', 'permintaan_keluar.permintaan_masuk_id')
+                // ->join('permintaan_keluar', 'permintaan_masuk.id', '=', 'permintaan_keluar.permintaan_masuk_id')
                 ->join('biodata', 'users.id', '=', 'biodata.users_id')
-                ->select('permintaan_masuk.*', 'permintaan_keluar.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl')
+                ->select('permintaan_masuk.*', 'bibit.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl', 'biodata.nama as nama_user')
                 ->where('permintaan_masuk.users_id', $userId)
                 ->orderby('permintaan_masuk.created_at', 'desc')
                 ->get();
+            // dd($datapm, $userId, $biodata);
             $bibit = Bibit::all();
             $data = [
                 'title' => $title,

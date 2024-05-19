@@ -189,3 +189,5 @@ Route::get('biodata-detail/{id}', [BiodataController::class, 'detail'])->name('b
 
 Route::get('export', [PenanamanController::class, 'export'])->name('penanaman.export');
 Route::post('filter-result', [PenanamanController::class, 'filter_result'])->name('filter.result');
+
+Route::post('submit-request', [LandingController::class, 'submitRequest'])->name('submit-request');

@@ -55,7 +55,6 @@
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-info">Filter</button>
                                     <button type="reset" class="btn btn-dark">Reset</button>
-                                    <button type="reset" class="btn btn-success">Export</button>
                                 </div>
                             </div>
                         </form>
@@ -115,12 +114,12 @@
                                                 <div style="display: inline-block;">
                                                     <button type="button" data-toggle="modal" data-target="#add-pb-{{ $pm->masuk_id }}" class="btn btn-danger btn-circle {{ $pm->status != 'Masuk' ? 'disabled' : '' }}"><i data-feather="x" class="feather-icon"></i></button>
                                                 </div>
-                                                <div style="display: inline-block;">
+                                                {{-- <div style="display: inline-block;">
                                                     <form action="{{ route('batal.store', ['id' => $pm->masuk_id]) }}" method="POST">
                                                         @csrf
                                                         <button type="submit" class="btn btn-primary btn-circle"><i data-feather="printer" class="feather-icon"></i></button>
                                                     </form>
-                                                </div>
+                                                </div> --}}
                                             </td>
                                         </tr>
                                     @endforeach

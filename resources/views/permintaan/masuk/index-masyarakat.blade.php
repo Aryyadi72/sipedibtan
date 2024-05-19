@@ -142,7 +142,9 @@
                                                 <th>Jumlah</th>
                                                 <th>Status</th>
                                                 <th>Catatan</th>
+                                                @if (auth()->check() && (auth()->user()->level == 'Petugas'))
                                                 <th>Aksi</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -150,7 +152,7 @@
                                                 <tr>
                                                     <td class="text-center">{{ $key + 1 }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($pm->masuk_tgl)->format('d-m-Y') }}</td>
-                                                    <td>{{ $pm->nama }}</td>
+                                                    <td>{{ $pm->nama_user }}</td>
                                                     <td>{{ $pm->bibit }}</td>
                                                     <td>{{ $pm->jumlah }}</td>
                                                     @if ($pm->status == 'Masuk')
@@ -169,11 +171,15 @@
                                                             class="fas fa-times-circle"></i> {{ $pm->status }}</button>
                                                         </td>
                                                     @endif
-                                                    @if ($pm->catatan == null)
+                                                    @php
+                                                        $catatan = \App\Models\PermintaanKeluar::where('permintaan_masuk_id', $pm->id)->first();
+                                                    @endphp
+                                                    @if ($catatan == null)
                                                         <td>-</td>
                                                     @else
-                                                        <td>{{ $pm->catatan }}</td>
+                                                        <td>{{ $catatan->catatan }}</td>
                                                     @endif
+                                                    @if (auth()->check() && (auth()->user()->level == 'Petugas'))
                                                     <td class="text-center">
                                                         <div style="display: inline-block;">
                                                             <form action="{{ route('keluar.store', ['id' => $pm->masuk_id]) }}" method="POST">
@@ -187,13 +193,8 @@
                                                                 <button type="submit" class="btn btn-danger btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }}><i data-feather="x" class="feather-icon"></i></button>
                                                             </form>
                                                         </div>
-                                                        {{-- <div style="display: inline-block;">
-                                                            <form action="{{ route('cetak.store', ['id' => $pm->masuk_id]) }}" method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-primary btn-circle" {{ $pm->status != 'Selesai' ? 'disabled' : '' }}><i data-feather="printer" class="feather-icon"></i></button>
-                                                            </form>
-                                                        </div> --}}
                                                     </td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>

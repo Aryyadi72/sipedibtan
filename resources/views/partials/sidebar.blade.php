@@ -66,10 +66,6 @@
                                             class="hide-menu"> Pembagian
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="{{ route('penanaman.export') }}" class="sidebar-link"><span
-                                            class="hide-menu"> Export
-                                        </span></a>
-                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('lainnya.index') }}"

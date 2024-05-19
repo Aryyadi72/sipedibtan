@@ -213,23 +213,30 @@
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="row g-4">
-                                        @foreach ($bibit as $bibit)
+                                        @foreach ($bibit as $item)
                                             <div class="col-md-6 col-lg-4 col-xl-3">
                                                 <div class="rounded position-relative fruite-item">
                                                     <div class="fruite-img">
                                                         <img src="{{ asset('landing-assets/img/bibit_sample_foto.jpg') }}" class="img-fluid w-100 rounded-top" alt="">
                                                     </div>
-                                                    @if ($bibit->total_jumlah > 0)
+                                                    @if ($item->total_jumlah > 0)
                                                         <div class="text-white bg-success px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tersedia</div>
                                                     @else
                                                         <div class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tidak Tersedia</div>
                                                     @endif
-                                                    {{-- <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div> --}}
                                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                        <h4>{{ $bibit->bibit }}</h4>
+                                                        <h4>{{ $item->bibit }}</h4>
                                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
                                                         <div class="d-flex justify-content-center flex-lg-wrap">
-                                                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Buat Permintaan</a>
+                                                            @if ($item->total_jumlah > 0)
+                                                                <button type="button" class="btn border border-secondary rounded-pill px-3 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ $item->id }}">
+                                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Buat Permintaan
+                                                                </button>
+                                                            @else
+                                                                <button type="button" class="btn border border-secondary rounded-pill px-3 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
+                                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Buat Permintaan
+                                                                </button>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -373,7 +380,46 @@
         </div>
         <!-- Copyright End -->
 
-
+        @foreach ($bibit as $item)
+        <div class="modal fade" id="exampleModal-{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModal-{{ $item->id }}Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModal-{{ $item->id }}Label">Buat Permintaan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('submit-request') }}" method="POST">
+                        @csrf
+                        <div class="modal-body">
+                            <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="bibit_id" value="{{ $item->id }}">
+                            <input type="hidden" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="status" value="Masuk">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Bibit</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="bibit_name" value="{{ $item->bibit }}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Jumlah</label>
+                                <input type="number" class="form-control" name="jumlah" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div id="emailHelp" class="form-text">Sebelum melakukan permintaan bibit, pastikan anda sudah melakukan registrasi akun. Jika belum silahkan lakukan <a href="{{ route('register-page') }}">registrasi</a>.</div><br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endforeach
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
