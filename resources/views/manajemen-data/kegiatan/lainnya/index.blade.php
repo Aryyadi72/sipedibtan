@@ -86,7 +86,7 @@
                                     @foreach ($data as $key => $lainnya)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($lainnya->tanggal)->format('d-m-y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($lainnya->tanggal)->format('d-m-Y') }}</td>
                                             <td>{{ $lainnya->kegiatan }}</td>
                                             <td>{{ $lainnya->pelaksana }}</td>
                                             <td>{{ $lainnya->lokasi }}</td>
@@ -95,7 +95,7 @@
                                             <td>{{ $lainnya->inputed_by }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('lainnya.edit', $lainnya->id) }}" class="btn btn-warning btn-circle"><i class="fa fa-edit"></i></a>
-                                                <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-lainnya"><i class="fa fa-trash"></i></button>
+                                                <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-lainnya-{{ $lainnya->id }}"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -110,8 +110,8 @@
 
     @foreach ($data as $lainnya)
     <!-- Delete -->
-    <div id="delete-lainnya" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+    <div id="delete-lainnya-{{ $lainnya->id }}" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="delete-lainnya-{{ $lainnya->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-danger">

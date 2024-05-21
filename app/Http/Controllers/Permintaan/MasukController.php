@@ -28,13 +28,11 @@ class MasukController extends Controller
             $datapm = DB::table('permintaan_masuk')
                 ->join('bibit', 'permintaan_masuk.bibit_id', '=', 'bibit.id')
                 ->join('users', 'permintaan_masuk.users_id', '=', 'users.id')
-                // ->join('permintaan_keluar', 'permintaan_masuk.id', '=', 'permintaan_keluar.permintaan_masuk_id')
                 ->join('biodata', 'users.id', '=', 'biodata.users_id')
                 ->select('permintaan_masuk.*', 'bibit.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl', 'biodata.nama as nama_user')
                 ->where('permintaan_masuk.users_id', $userId)
                 ->orderby('permintaan_masuk.created_at', 'desc')
                 ->get();
-            // dd($datapm, $userId, $biodata);
             $bibit = Bibit::all();
             $data = [
                 'title' => $title,
@@ -52,12 +50,46 @@ class MasukController extends Controller
             $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
             $datapm = DB::table('permintaan_masuk')
                 ->join('bibit', 'permintaan_masuk.bibit_id', '=', 'bibit.id')
+                ->leftJoin('bibit_masuk', 'bibit.id', '=', 'bibit_masuk.bibit_id')
                 ->join('users', 'permintaan_masuk.users_id', '=', 'users.id')
                 ->join('biodata', 'users.id', '=', 'biodata.users_id')
-                ->select('permintaan_masuk.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl')
+                ->select(
+                    'permintaan_masuk.*',
+                    'bibit.*',
+                    'users.*',
+                    'biodata.*',
+                    'permintaan_masuk.id as masuk_id',
+                    'permintaan_masuk.created_at as masuk_tgl',
+                    DB::raw('COALESCE(SUM(bibit_masuk.stok), 0) as total_jumlah')
+                )
                 ->where('permintaan_masuk.status', 'Masuk')
-                ->orderby('permintaan_masuk.created_at', 'desc')
+                ->groupBy(
+                    'permintaan_masuk.id',
+                    'permintaan_masuk.bibit_id',
+                    'permintaan_masuk.users_id',
+                    'permintaan_masuk.status',
+                    'permintaan_masuk.created_at',
+                    'permintaan_masuk.updated_at',
+                    'bibit.id',
+                    'bibit.bibit',
+                    'bibit.deskripsi',
+                    'bibit.foto',
+                    'bibit.created_at',
+                    'bibit.updated_at',
+                    'users.id',
+                    'users.email',
+                    'users.password',
+                    'users.created_at',
+                    'users.updated_at',
+                    'biodata.id',
+                    'biodata.users_id',
+                    'biodata.alamat',
+                    'biodata.created_at',
+                    'biodata.updated_at'
+                )
+                ->orderBy('permintaan_masuk.created_at', 'desc')
                 ->get();
+
             $bibit = Bibit::all();
             $data = [
                 'title' => $title,
@@ -110,7 +142,6 @@ class MasukController extends Controller
         return redirect()->route('masuk.index')->with('success', 'Data penanaman berhasil disimpan.');
     }
 
-
     public function edit()
     {
         $title = "Edit Permintaan Masuk - SIPEDIBTAN";
@@ -142,8 +173,7 @@ class MasukController extends Controller
             ->join('bibit', 'permintaan_masuk.bibit_id', '=', 'bibit.id')
             ->join('users', 'permintaan_masuk.users_id', '=', 'users.id')
             ->join('biodata', 'users.id', '=', 'biodata.users_id')
-            ->join('permintaan_keluar', 'permintaan_masuk.id', '=', 'permintaan_keluar.permintaan_masuk_id')
-            ->select('permintaan_masuk.*', 'permintaan_keluar.*', 'bibit.*', 'users.*', 'biodata.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl')
+            ->select('permintaan_masuk.*', 'bibit.*', 'permintaan_masuk.id as masuk_id', 'permintaan_masuk.created_at as masuk_tgl', 'biodata.nama as nama_user')
             ->where('permintaan_masuk.users_id', $userId)
             ->where('permintaan_masuk.bibit_id', $bibitId)
             ->where('permintaan_masuk.status', $status)

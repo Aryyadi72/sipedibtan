@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Bibit;
 use DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
 
 class BibitController extends Controller
 {
@@ -59,26 +60,25 @@ class BibitController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
             'bibit' => 'required|string|max:255',
             'inputed_by' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'keterangan' => 'required|string|max:255',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'deskripsi' => 'required|string|max:255',
         ]);
 
         // Menangani unggahan gambar
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoName = time() . '.' . $foto->getClientOriginalExtension();
+            $foto->move(public_path('images'), $fotoName);
 
             // Menyimpan data bibit beserta nama file gambar
             $bibitCreate = Bibit::create([
                 'bibit' => $request->bibit,
                 'inputed_by' => $request->inputed_by,
-                'image' => $imageName,
-                'keterangan' => $request->keterangan,
+                'foto' => $fotoName,
+                'deskripsi' => $request->deskripsi,
             ]);
 
             if ($bibitCreate) {
@@ -104,22 +104,62 @@ class BibitController extends Controller
         return view('manajemen-data.bibit.bibit.edit', $data);
     }
 
+    // public function update(Request $request, $id)
+    // {
+    //     $bibit = Bibit::find($id);
+    //     $bibitUpdate = $bibit->update([
+    //         'bibit' => $request->bibit,
+    //     ]);
+
+    //     if ($bibitUpdate) {
+    //         Alert::success('Success!', 'Data bibit berhasil diperbarui.');
+    //         return redirect()->route('bibit.index');
+    //     } else {
+    //         Alert::error('Error!', 'Data bibit gagal diperbarui.');
+    //         return redirect()->route('bibit.index');
+    //     }
+
+    // }
+
     public function update(Request $request, $id)
     {
-        $bibit = Bibit::find($id);
-        $bibitUpdate = $bibit->update([
-            'bibit' => $request->bibit,
+        $request->validate([
+            'bibit' => 'required',
+            'inputed_by' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'deskripsi' => 'required',
         ]);
 
-        if ($bibitUpdate) {
-            Alert::success('Success!', 'Data bibit berhasil diperbarui.');
-            return redirect()->route('bibit.index');
+        $bibit = Bibit::findOrFail($id);
+
+        if ($request->hasFile('foto')) {
+            if ($bibit->foto) {
+                Storage::delete($bibit->foto);
+            }
+
+            $imageName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('images'), $imageName);
+            $fotoName = $imageName;
         } else {
-            Alert::error('Error!', 'Data bibit gagal diperbarui.');
-            return redirect()->route('bibit.index');
+            $fotoName = $bibit->foto;
         }
 
+        $bibitUp = $bibit->update([
+            'bibit' => $request->bibit,
+            'inputed_by' => $request->inputed_by,
+            'foto' => $fotoName,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+        if (!$bibitUp) {
+            Alert::error('Error!', 'Data bibit gagal diperbarui.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Data bibit berhasil diperbarui.');
+            return redirect()->route('bibit.index');
+        }
     }
+
 
     public function destroy($id)
     {

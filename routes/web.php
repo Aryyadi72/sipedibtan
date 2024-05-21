@@ -161,7 +161,7 @@ Route::get('biodata', [BiodataController::class, 'index'])->name('biodata.index'
 Route::get('biodata-create', [BiodataController::class, 'create'])->name('biodata.create');
 Route::post('biodata-store', [BiodataController::class, 'store'])->name('biodata.store');
 Route::get('biodata-edit/{id}', [BiodataController::class, 'edit'])->name('biodata.edit');
-Route::post('biodata-update/{id}', [BiodataController::class, 'update'])->name('biodata.update');
+Route::put('biodata-update/{id}', [BiodataController::class, 'update'])->name('biodata.update');
 Route::post('biodata-delete/{id}', [BiodataController::class, 'delete'])->name('biodata.destroy');
 
 Route::get('/batal', [DibatalkanController::class, 'index'])->name('batal.index');

@@ -90,7 +90,7 @@ class BiodataController extends Controller
 
         if ($level == 'Masyarakat') {
             Alert::success('Success!', 'Data biodata berhasil diperbarui.');
-            return back();
+            return redirect()->route('masuk.index');
         } else {
             Alert::success('Success!', 'Data biodata berhasil diperbarui.');
             return redirect()->route('biodata.index');
