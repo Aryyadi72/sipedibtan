@@ -58,9 +58,9 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto"></div>
                         <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                            {{-- <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> --}}
                             <a href="{{ route('login') }}" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
+                                <i class="fas fa-user fa-2x"> Login</i>
                             </a>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
 
 
         <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {{-- <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content rounded-0">
                     <div class="modal-header">
@@ -86,7 +86,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Modal Search End -->
 
 
@@ -98,7 +98,7 @@
                         <h4 class="mb-3 text-secondary">KPH Tanah Laut</h4>
                         <h1 class="mb-5 display-3 text-primary">Sistem Informasi Pengelolaan Data Bibit & Kegiatan</h1>
                     </div>
-                    <div class="col-md-12 col-lg-5">
+                    {{-- <div class="col-md-12 col-lg-5">
                         <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item active rounded">
@@ -119,7 +119,7 @@
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -186,7 +186,7 @@
                 <div class="tab-class text-center">
                     <div class="row g-4">
                         <div class="col-lg-4 text-start">
-                            <h1>Our Organic Products</h1>
+                            <h1>Bibit Kami</h1>
                         </div>
                         <div class="col-lg-8 text-end">
                             <ul class="nav nav-pills d-inline-flex text-center mb-5">
@@ -217,7 +217,7 @@
                                             <div class="col-md-6 col-lg-4 col-xl-3">
                                                 <div class="rounded position-relative fruite-item">
                                                     <div class="fruite-img">
-                                                        <img src="{{ asset('landing-assets/img/bibit_sample_foto.jpg') }}" class="img-fluid w-100 rounded-top" alt="">
+                                                        <img src="{{ asset('images/' . $item->foto) }}" class="img-fluid w-100 rounded-top" alt="">
                                                     </div>
                                                     @if ($item->total_jumlah > 0)
                                                         <div class="text-white bg-success px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tersedia</div>
@@ -226,7 +226,7 @@
                                                     @endif
                                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                         <h4>{{ $item->bibit }}</h4>
-                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                                                        <p>{{ $item->deskripsi }}</p>
                                                         <div class="d-flex justify-content-center flex-lg-wrap">
                                                             @if ($item->total_jumlah > 0)
                                                                 <button type="button" class="btn border border-secondary rounded-pill px-3 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ $item->id }}">
@@ -254,14 +254,16 @@
                                             <div class="col-md-6 col-lg-4 col-xl-3">
                                                 <div class="rounded position-relative fruite-item">
                                                     <div class="fruite-img">
-                                                        <img src="{{ asset('landing-assets/img/bibit_sample_foto.jpg') }}" class="img-fluid w-100 rounded-top" alt="">
+                                                        <img src="{{ asset('images/' . $bt->foto) }}" class="img-fluid w-100 rounded-top" alt="">
                                                     </div>
                                                     <div class="text-white bg-success px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{ $bt->total_jumlah }}</div>
                                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                         <h4>{{ $bt->bibit }}</h4>
-                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                                                        <p>{{ $bt->deskripsi }}</p>
                                                         <div class="d-flex justify-content-center flex-lg-wrap">
-                                                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Buat Permintaan</a>
+                                                            <button type="button" class="btn border border-secondary rounded-pill px-3 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ $bt->id }}">
+                                                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Buat Permintaan
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -279,12 +281,12 @@
                                             <div class="col-md-6 col-lg-4 col-xl-3">
                                                 <div class="rounded position-relative fruite-item">
                                                     <div class="fruite-img">
-                                                        <img src="{{ asset('landing-assets/img/bibit_sample_foto.jpg') }}" class="img-fluid w-100 rounded-top" alt="">
+                                                        <img src="{{ asset('images/' . $btt->foto) }}" class="img-fluid w-100 rounded-top" alt="">
                                                     </div>
                                                     <div class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tidak Tersedia</div>
                                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                         <h4>{{ $btt->bibit }}</h4>
-                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                                                        <p>{{ $btt->deskripsi }}</p>
                                                         <div class="d-flex justify-content-center flex-lg-wrap">
                                                             <button class="btn border border-secondary rounded-pill px-3 text-primary" disabled>
                                                                 <i class="fa fa-shopping-bag me-2 text-primary"></i> Buat Permintaan
@@ -373,7 +375,8 @@
                         <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
                         <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
                         <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">KPH Tanah Laut</a>
+                        {{-- Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">KPH Tanah Laut</a> --}}
+                        Sistem Informasi Pengelolaan Data Bibit & Kegiatan
                     </div>
                 </div>
             </div>

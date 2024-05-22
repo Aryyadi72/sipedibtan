@@ -48,11 +48,8 @@
                                                             <select class="form-control" id="exampleFormControlSelect1" name="bibit_id">
                                                                 <option selected disabled>Pilih Bibit</option>
                                                                 @foreach ($bibit as $item)
-                                                                    @php
-                                                                        $stok = \App\Models\BibitMasuk::where('bibit_id', $item->id)->sum('stok');
-                                                                    @endphp
-                                                                    <option value="{{ $item->id }}" {{ $stok == 0 ? 'disabled' : '' }}>
-                                                                        {{ $item->bibit }} {{ $stok == 0 ? '(Stok Habis)' : '' }}
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->bibit }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
@@ -174,7 +171,7 @@
                                                     @php
                                                         $catatan = \App\Models\PermintaanKeluar::where('permintaan_masuk_id', $pm->id)->first();
                                                     @endphp
-                                                    @if ($catatan == null)
+                                                    @if ($catatan == null || $pm->status != 'Batal')
                                                         <td>-</td>
                                                     @else
                                                         <td>{{ $catatan->catatan }}</td>

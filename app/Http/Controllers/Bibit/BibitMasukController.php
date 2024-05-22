@@ -8,6 +8,7 @@ use App\Models\BibitMasuk;
 use App\Models\Bibit;
 use DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Carbon\Carbon;
 
 class BibitMasukController extends Controller
 {
@@ -39,11 +40,13 @@ class BibitMasukController extends Controller
     {
         $user = auth()->user();
         $level = $user->level;
+        $now = Carbon::now()->tz('Asia/Jakarta');
 
         $bmadd = BibitMasuk::create([
             'bibit_id' => $request->bibit_id,
             'stok' => $request->stok,
             'inputed_by' => $level,
+            'created_at' => $now
         ]);
 
         if ($bmadd) {

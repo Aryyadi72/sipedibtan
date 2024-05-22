@@ -37,6 +37,8 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Bibit</th>
+                                        <th>Foto</th>
+                                        <th>Deskripsi</th>
                                         <th>Jumlah</th>
                                         <th>Diinputkan oleh</th>
                                         @if (auth()->check() && (auth()->user()->level == 'Admin'))
@@ -49,6 +51,8 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $bibit->bibit }}</td>
+                                            <td><img src="{{ asset('images/' . $bibit->foto) }}" alt="Foto Bibit" height="100" width="100"></td>
+                                            <td>{{ $bibit->deskripsi }}</td>
                                             @if ($bibit->total_jumlah > 0)
                                                 <td>
                                                     <button type="button" class="btn btn-success btn-rounded"><i
@@ -89,25 +93,24 @@
                     <button type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">×</button>
                 </div>
-                <form action="{{ route('bibit.store') }}" method="POST">
+                <form action="{{ route('bibit.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="bibit">
                         </div>
+
                         <input type="hidden" class="form-control" name="inputed_by" value="{{ $user->level }}">
-                    </div>
-                    <div class="modal-body">
+                        <br>
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Foto Bibit</label>
                         <div class="col-sm-12">
-                            <input type="file" class="form-control" name="foto">
+                            <input type="file" class="form-control-file" name="foto">
                         </div>
-                    </div>
-                    <div class="modal-body">
-                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Keterangan</label>
+                        <br>
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Deskripsi</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="keterangan">
+                            <input type="text" class="form-control" name="deskripsi">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -132,7 +135,7 @@
                     <button type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">×</button>
                 </div>
-                <form action="{{ route('bibit.update', $bibit->id) }}" method="POST">
+                <form action="{{ route('bibit.update', $bibit->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
@@ -140,7 +143,18 @@
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="bibit" value="{{ $bibit->bibit }}">
                         </div>
+
                         <input type="hidden" class="form-control" name="inputed_by" value="{{ $bibit->inputed_by }}">
+                        <br>
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Foto Bibit</label>
+                        <div class="col-sm-12">
+                            <input type="file" class="form-control-file" name="foto" value="{{ $bibit->foto }}">
+                        </div>
+                        <br>
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Deskripsi</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="deskripsi" value="{{ $bibit->deskripsi }}">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light"

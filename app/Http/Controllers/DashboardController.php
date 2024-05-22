@@ -28,6 +28,8 @@ class DashboardController extends Controller
         $chartSPB = $SummaryPermintaanBulanan->build();
         $chartSBB = $SummaryBibitBulanan->build();
 
+        // dd($chartSPH);
+
         $title = "Dashboard - SIPEDIBTAN";
         $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
 
