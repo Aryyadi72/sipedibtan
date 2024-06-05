@@ -156,8 +156,9 @@
                     @method('PUT')
                     <div class="modal-body">
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label>
+                        <input type="hidden" class="form-control" name="bibit_id" value="{{ $bm->bibit_id }}">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="bibit_id" value="{{ $bm->bibit_id }}">
+                            <input type="text" class="form-control" name="nama_bibit" value="{{ $bm->bibit->bibit }}">
                         </div>
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Stok</label>
                         <div class="col-sm-12">
