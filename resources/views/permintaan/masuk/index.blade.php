@@ -55,7 +55,6 @@
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-info">Filter</button>
                                     <button type="reset" class="btn btn-dark">Reset</button>
-                                    <button type="reset" class="btn btn-success">Export</button>
                                 </div>
                             </div>
                         </form>
@@ -77,6 +76,7 @@
                                         <th>Nama</th>
                                         <th>Bibit</th>
                                         <th>Jumlah</th>
+                                        <th>Ketersediaan Bibit</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -88,7 +88,28 @@
                                             <td>{{ \Carbon\Carbon::parse($pm->masuk_tgl)->format('d-m-Y') }}</td>
                                             <td>{{ $pm->nama }}</td>
                                             <td>{{ $pm->bibit }}</td>
-                                            <td>{{ $pm->jumlah }}</td>
+                                            @if ($pm->jumlah <= $pm->total_jumlah)
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-rounded"><i
+                                                        class="fas fa-check-circle"></i> {{ $pm->jumlah }}</button>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <button type="button" class="btn btn-danger btn-rounded"><i
+                                                        class="fas fa-times-circle"></i> {{ $pm->jumlah }}</button>
+                                                </td>
+                                            @endif
+                                            @if ($pm->total_jumlah > 0)
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-rounded"><i
+                                                        class="fas fa-check-circle"></i> Tersedia : {{ $pm->total_jumlah }}</button>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <button type="button" class="btn btn-danger btn-rounded"><i
+                                                        class="fas fa-times-circle"></i> Tidak Tersedia</button>
+                                                </td>
+                                            @endif
                                             @if ($pm->status == 'Masuk')
                                             <td>
                                                 <button type="button" class="btn btn-cyan btn-rounded"><i
@@ -106,21 +127,31 @@
                                                 </td>
                                             @endif
                                             <td class="text-center">
-                                                <div style="display: inline-block;">
-                                                    <form action="{{ route('keluar.store', ['id' => $pm->masuk_id]) }}" method="POST">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-warning btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }}><i data-feather="external-link" class="feather-icon"></i></button>
-                                                    </form>
-                                                </div>
+                                                @if ($pm->jumlah <= $pm->total_jumlah)
+                                                    <div style="display: inline-block;">
+                                                        <form action="{{ route('keluar.store', ['id' => $pm->masuk_id]) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-warning btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }}><i data-feather="external-link" class="feather-icon"></i></button>
+                                                        </form>
+                                                    </div>
+                                                @else
+                                                    <div style="display: inline-block;">
+                                                        <form action="{{ route('keluar.store', ['id' => $pm->masuk_id]) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-warning btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }} disabled><i data-feather="external-link" class="feather-icon"></i></button>
+                                                        </form>
+                                                    </div>
+                                                @endif
+
                                                 <div style="display: inline-block;">
                                                     <button type="button" data-toggle="modal" data-target="#add-pb-{{ $pm->masuk_id }}" class="btn btn-danger btn-circle {{ $pm->status != 'Masuk' ? 'disabled' : '' }}"><i data-feather="x" class="feather-icon"></i></button>
                                                 </div>
-                                                <div style="display: inline-block;">
+                                                {{-- <div style="display: inline-block;">
                                                     <form action="{{ route('batal.store', ['id' => $pm->masuk_id]) }}" method="POST">
                                                         @csrf
                                                         <button type="submit" class="btn btn-primary btn-circle"><i data-feather="printer" class="feather-icon"></i></button>
                                                     </form>
-                                                </div>
+                                                </div> --}}
                                             </td>
                                         </tr>
                                     @endforeach

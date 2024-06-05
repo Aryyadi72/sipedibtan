@@ -4,7 +4,7 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
+                        @if (auth()->check() && (auth()->user()->level == 'Petugas' || auth()->user()->level == 'Admin'))
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('dashboard') }}"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
@@ -20,7 +20,7 @@
                         </li>
                         @endif
 
-                        @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
+                        @if (auth()->check() && (auth()->user()->level == 'Petugas'))
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Permintaan</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link" href="{{ route('masuk.index') }}"
@@ -37,7 +37,7 @@
                                     class="hide-menu">Permintaan Ditolak</span></a></li>
                         @endif
 
-                        @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
+                        @if (auth()->check() && (auth()->user()->level == 'Petugas' || auth()->user()->level == 'Admin'))
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Data Bibit</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('bibit.index') }}"
@@ -66,10 +66,6 @@
                                             class="hide-menu"> Pembagian
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="{{ route('penanaman.export') }}" class="sidebar-link"><span
-                                            class="hide-menu"> Export
-                                        </span></a>
-                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('lainnya.index') }}"
@@ -79,7 +75,7 @@
                         </li>
                         @endif
 
-                        @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
+                        @if (auth()->check() && (auth()->user()->level == 'Petugas' || auth()->user()->level == 'Admin'))
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Manajemen User</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('biodata.index') }}"
@@ -89,7 +85,7 @@
                         </li>
                         @endif
 
-                        @if (auth()->check() && auth()->user()->level == 'Superadmin')
+                        @if (auth()->check() && auth()->user()->level == 'Admin')
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                 href="{{ route('user.index') }}" aria-expanded="false"><i data-feather="user"
                                     class="feather-icon"></i><span class="hide-menu">User

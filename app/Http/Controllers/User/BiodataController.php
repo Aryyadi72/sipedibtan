@@ -13,8 +13,24 @@ class BiodataController extends Controller
     public function index()
     {
         $title = "Biodata Pengguna";
-        $data = Biodata::all();
+
+        $user = auth()->user()->level;
+
+        if ($user == 'Petugas') {
+            $data = DB::table('biodata')
+                ->join('users', 'biodata.users_id', 'users.id')
+                ->select('biodata.*', 'biodata.id as bioid')
+                ->where('users.level', 'Masyarakat')
+                ->get();
+        } else {
+            $data = DB::table('biodata')
+                ->join('users', 'biodata.users_id', 'users.id')
+                ->select('biodata.*', 'biodata.id as bioid')
+                ->get();
+        }
+
         $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();
+
         $data = [
             'title' => $title,
             'data' => $data,
@@ -53,16 +69,7 @@ class BiodataController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'alamat' => 'required',
-            'jenis_kelamin' => 'required',
-            'umur' => 'required|numeric',
-            'tempat_lahir' => 'required',
-            'tanggal_lahir' => 'required|date',
             'no_ktp' => 'required|numeric|unique:biodata,no_ktp,' . $id,
-            'no_telpon' => 'required',
-            'pendidikan' => 'required',
-            'agama' => 'required',
-            'domisili' => 'required',
         ]);
 
         $biodata = Biodata::findOrFail($id);
@@ -81,9 +88,9 @@ class BiodataController extends Controller
             'domisili' => $request->domisili,
         ]);
 
-        if ($level == 'User') {
+        if ($level == 'Masyarakat') {
             Alert::success('Success!', 'Data biodata berhasil diperbarui.');
-            return back();
+            return redirect()->route('masuk.index');
         } else {
             Alert::success('Success!', 'Data biodata berhasil diperbarui.');
             return redirect()->route('biodata.index');

@@ -12,13 +12,13 @@ return new class extends Migration {
     {
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->id();
-            // $table->enum('kegiatan', ['Sosialisasi', 'Patroli Keamanan Hutan', 'Pemadaman Kebakaran']);
             $table->string('kegiatan');
             $table->string('pelaksana');
             $table->string('lokasi');
             $table->string('keterangan');
             $table->string('foto');
             $table->string('inputed_by');
+            $table->string('tanggal');
             $table->timestamps();
         });
     }

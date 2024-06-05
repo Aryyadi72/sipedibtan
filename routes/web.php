@@ -51,7 +51,8 @@ Route::post('/register', [AuthController::class, 'store'])->name('register-store
 
 // Forgot Password
 Route::get('/reset-pass', [AuthController::class, 'forgot_password'])->name('reset.index');
-Route::post('/send-link', [AuthController::class, 'send_link'])->name('reset.send');
+Route::post('/reset-pass-auth', [AuthController::class, 'reset_password'])->name('reset.pass');
+Route::post('/check-email', [AuthController::class, 'checkEmail'])->name('check.email');
 
 // Logout
 Route::post('/logout', function () {
@@ -112,16 +113,6 @@ Route::prefix('bibit')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
-    Route::resource('biodata', BiodataController::class)->names([
-        'index' => 'biodata.index',
-        'create' => 'biodata.create',
-        'store' => 'biodata.store',
-        'edit' => 'biodata.edit',
-        'update' => 'biodata.update',
-        'delete' => 'biodata.delete',
-        // 'detail' => 'biodata.detail',
-    ]);
-
     Route::resource('user', UserController::class)->names([
         'index' => 'user.index',
         'create' => 'user.create',
@@ -166,6 +157,13 @@ Route::prefix('kegiatan')->group(function () {
 Route::get('/keluar', [KeluarController::class, 'index'])->name('keluar.index');
 Route::post('keluar/store/{id}', [KeluarController::class, 'store'])->name('keluar.store');
 
+Route::get('biodata', [BiodataController::class, 'index'])->name('biodata.index');
+Route::get('biodata-create', [BiodataController::class, 'create'])->name('biodata.create');
+Route::post('biodata-store', [BiodataController::class, 'store'])->name('biodata.store');
+Route::get('biodata-edit/{id}', [BiodataController::class, 'edit'])->name('biodata.edit');
+Route::put('biodata-update/{id}', [BiodataController::class, 'update'])->name('biodata.update');
+Route::post('biodata-delete/{id}', [BiodataController::class, 'delete'])->name('biodata.destroy');
+
 Route::get('/batal', [DibatalkanController::class, 'index'])->name('batal.index');
 // Route::post('batal/store/{id}', [DibatalkanController::class, 'store'])->name('batal.store');
 Route::post('batal/store', [DibatalkanController::class, 'store'])->name('batal.store');
@@ -187,4 +185,6 @@ Route::post('filter-penanaman', [PenanamanController::class, 'filter'])->name('f
 Route::get('biodata-detail/{id}', [BiodataController::class, 'detail'])->name('biodata.detail');
 
 Route::get('export', [PenanamanController::class, 'export'])->name('penanaman.export');
-Route::post('export', [PenanamanController::class, 'export_process'])->name('export.process');
+Route::post('filter-result', [PenanamanController::class, 'filter_result'])->name('filter.result');
+
+Route::post('submit-request', [LandingController::class, 'submitRequest'])->name('submit-request');

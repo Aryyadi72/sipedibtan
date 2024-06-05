@@ -48,11 +48,8 @@
                                                             <select class="form-control" id="exampleFormControlSelect1" name="bibit_id">
                                                                 <option selected disabled>Pilih Bibit</option>
                                                                 @foreach ($bibit as $item)
-                                                                    @php
-                                                                        $stok = \App\Models\BibitMasuk::where('bibit_id', $item->id)->sum('stok');
-                                                                    @endphp
-                                                                    <option value="{{ $item->id }}" {{ $stok == 0 ? 'disabled' : '' }}>
-                                                                        {{ $item->bibit }} {{ $stok == 0 ? '(Stok Habis)' : '' }}
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->bibit }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
@@ -142,7 +139,9 @@
                                                 <th>Jumlah</th>
                                                 <th>Status</th>
                                                 <th>Catatan</th>
+                                                @if (auth()->check() && (auth()->user()->level == 'Petugas'))
                                                 <th>Aksi</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -150,7 +149,7 @@
                                                 <tr>
                                                     <td class="text-center">{{ $key + 1 }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($pm->masuk_tgl)->format('d-m-Y') }}</td>
-                                                    <td>{{ $pm->nama }}</td>
+                                                    <td>{{ $pm->nama_user }}</td>
                                                     <td>{{ $pm->bibit }}</td>
                                                     <td>{{ $pm->jumlah }}</td>
                                                     @if ($pm->status == 'Masuk')
@@ -169,11 +168,15 @@
                                                             class="fas fa-times-circle"></i> {{ $pm->status }}</button>
                                                         </td>
                                                     @endif
-                                                    @if ($pm->catatan == null)
+                                                    @php
+                                                        $catatan = \App\Models\PermintaanKeluar::where('permintaan_masuk_id', $pm->id)->first();
+                                                    @endphp
+                                                    @if ($catatan == null || $pm->status != 'Batal')
                                                         <td>-</td>
                                                     @else
-                                                        <td>{{ $pm->catatan }}</td>
+                                                        <td>{{ $catatan->catatan }}</td>
                                                     @endif
+                                                    @if (auth()->check() && (auth()->user()->level == 'Petugas'))
                                                     <td class="text-center">
                                                         <div style="display: inline-block;">
                                                             <form action="{{ route('keluar.store', ['id' => $pm->masuk_id]) }}" method="POST">
@@ -187,14 +190,8 @@
                                                                 <button type="submit" class="btn btn-danger btn-circle" {{ $pm->status != 'Masuk' ? 'disabled' : '' }}><i data-feather="x" class="feather-icon"></i></button>
                                                             </form>
                                                         </div>
-                                                        <div style="display: inline-block;">
-                                                            <form action="{{ route('cetak.store') }}" method="POST">
-                                                                @csrf
-                                                                <input type="hidden" name="masuk_id" value="{{ $pm->masuk_id }}">
-                                                                <button type="submit" class="btn btn-primary btn-circle"><i data-feather="printer" class="feather-icon"></i></button>
-                                                            </form>
-                                                        </div>
                                                     </td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -229,7 +226,7 @@
                                         $stok = \App\Models\BibitMasuk::where('bibit_id', $item->id)->sum('stok');
                                     @endphp
                                     <option value="{{ $item->id }}" {{ $stok == 0 ? 'disabled' : '' }}>
-                                        {{ $item->bibit }} {{ $stok == 0 ? '(Stok Habis)' : '' }}
+                                        {{ $item->bibit }} ({{ $stok }}) {{ $stok == 0 ? '(Stok Habis)' : '' }}
                                     </option>
                                 @endforeach
                             </select>

@@ -40,7 +40,7 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     @include('sweetalert::alert')
-    @if (auth()->check() && (auth()->user()->level == 'Superadmin' || auth()->user()->level == 'Admin'))
+    @if (auth()->check() && (auth()->user()->level == 'Petugas' || auth()->user()->level == 'Admin'))
         <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
             data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
             @include('partials.header')
