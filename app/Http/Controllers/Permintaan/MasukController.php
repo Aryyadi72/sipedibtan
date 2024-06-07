@@ -21,7 +21,7 @@ class MasukController extends Controller
         if ($user->level == 'Masyarakat') {
             $title = "Permintaan Bibit - SIPEDIBTAN";
             $totalAll = PermintaanMasuk::where('users_id', $userId)->count();
-            $totalMasuk = PermintaanMasuk::where('users_id', $userId)->where('status', 'Masuk')->count();
+            $totalMasuk = PermintaanMasuk::where('users_id', $userId)->where('status', 'masuk')->count();
             $totalSelesai = PermintaanMasuk::where('users_id', $userId)->where('status', 'Selesai')->count();
             $totalBatal = PermintaanMasuk::where('users_id', $userId)->where('status', 'Batal')->count();
             $biodata = DB::table('biodata')->where('users_id', auth()->user()->id)->first();

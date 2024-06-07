@@ -28,63 +28,7 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <!-- basic table -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="{{ route('filter') }}" method="POST">
-                                    @csrf
-                                    <div class="form-body">
-                                        <div class="form-group row">
-                                            <label class="col-md-2">Filter Data </label>
-                                            <div class="col-md-10">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <input type="date" class="form-control"
-                                                                placeholder="First Input &amp; First Row" name="start_date">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="form-control" id="exampleFormControlSelect1" name="bibit_id">
-                                                                <option selected disabled>Pilih Bibit</option>
-                                                                @foreach ($bibit as $item)
-                                                                    <option value="{{ $item->id }}">
-                                                                        {{ $item->bibit }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <input type="date" class="form-control"
-                                                                placeholder="Second Input &amp; First Row" name="end_date">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="form-control" id="exampleFormControlSelect1" name="status">
-                                                                <option selected disabled>Pilih Status</option>
-                                                                <option value="Masuk">Masuk</option>
-                                                                <option value="Selesai">Selesai</option>
-                                                                <option value="Batal">Batal</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-actions">
-                                        <div class="text-right">
-                                            <button type="submit" class="btn btn-info">Filter</button>
-                                            <button type="reset" class="btn btn-dark">Reset</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -104,7 +48,7 @@
                                         <div class="card card-hover">
                                             <div class="p-2 bg-cyan text-center">
                                                 <h1 class="font-light text-white">{{ $totalMasuk }}</h1>
-                                                <h6 class="text-white">Masuk</h6>
+                                                <h6 class="text-white">Diajukan</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -155,7 +99,7 @@
                                                     @if ($pm->status == 'Masuk')
                                                     <td>
                                                         <button type="button" class="btn btn-cyan btn-rounded"><i
-                                                            class="fas fa-arrow-alt-circle-right"></i> {{ $pm->status }}</button>
+                                                            class="fas fa-arrow-alt-circle-right"></i> Diajukan</button>
                                                     </td>
                                                     @elseif ($pm->status == 'Selesai')
                                                     <td>

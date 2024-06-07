@@ -170,7 +170,7 @@
                             </div>
                             <div class="featurs-content text-center">
                                 <h5>Sigap</h5>
-                                <p class="mb-0">Memberikan layanan terbaik 24/7</p>
+                                <p class="mb-0">Memberikan layanan terbaik</p>
                             </div>
                         </div>
                     </div>
@@ -308,7 +308,7 @@
 
 
         <!-- Fact Start -->
-        <div class="container-fluid py-5">
+        <!-- <div class="container-fluid py-5">
             <div class="container">
                 <div class="bg-light p-5 rounded">
                     <div class="row g-4 justify-content-center">
@@ -343,7 +343,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Fact Start -->
 
 
