@@ -30,7 +30,7 @@
                 <!-- *************************************************************** -->
                 <!-- Start First Cards -->
                 <!-- *************************************************************** -->
-                <div class="card-group">
+                {{-- <div class="card-group">
                     <div class="card border-right">
                         <div class="card-body">
                             <div class="d-flex d-lg-flex d-md-block align-items-center">
@@ -74,10 +74,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- *************************************************************** -->
                 <!-- End First Cards -->
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-6">
                         <div class="card">
                             <div class="card-body">
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="card-group">
                     <div class="card border-right">
