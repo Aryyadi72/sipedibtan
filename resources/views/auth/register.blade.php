@@ -20,7 +20,10 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <input class="form-control" type="email" placeholder="Masukkan email" name="email" required>
+                                        <input class="form-control @error('email') is-invalid @enderror" type="email" placeholder="Masukkan email" name="email" value="{{ old('email') }}" required>
+                                        @error('email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12">

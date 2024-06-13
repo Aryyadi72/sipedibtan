@@ -10,6 +10,7 @@ use App\Models\BibitKeluar;
 use App\Models\BibitMasuk;
 use DB;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MasukController extends Controller
 {
@@ -124,22 +125,27 @@ class MasukController extends Controller
             'inputed_by' => 'required',
         ]);
 
-        BibitKeluar::create([
-            'bibit_id' => $request->bibit_id,
-            'jumlah' => $request->jumlah,
-            'tanggal' => Carbon::today()->toDateString(),
-            'inputed_by' => $request->inputed_by,
-            'keterangan' => 'Permintaan'
-        ]);
+        if ($request->jumlah < 1) {
+            Alert::error('Error!', 'Permintaan gagal, jumlah tidak sesuai.');
+            return redirect()->back();
+        } else {
+            BibitKeluar::create([
+                'bibit_id' => $request->bibit_id,
+                'jumlah' => $request->jumlah,
+                'tanggal' => Carbon::today()->toDateString(),
+                'inputed_by' => $request->inputed_by,
+                'keterangan' => 'Permintaan'
+            ]);
 
-        PermintaanMasuk::create([
-            'users_id' => $request->users_id,
-            'bibit_id' => $request->bibit_id,
-            'jumlah' => $request->jumlah,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('masuk.index')->with('success', 'Data penanaman berhasil disimpan.');
+            PermintaanMasuk::create([
+                'users_id' => $request->users_id,
+                'bibit_id' => $request->bibit_id,
+                'jumlah' => $request->jumlah,
+                'status' => $request->status,
+            ]);
+            Alert::success('Success!', 'Permintaan bibit berhasil.');
+            return redirect()->back();
+        }
     }
 
     public function edit()
@@ -151,6 +157,31 @@ class MasukController extends Controller
             'biodata' => $biodata
         ];
         return view('permintaan.masuk.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'users_id' => 'required',
+            'bibit_id' => 'required',
+            'jumlah' => 'required',
+            'status' => 'required',
+            'inputed_by' => 'required',
+        ]);
+
+        $data = PermintaanMasuk::findOrFail($id);
+
+        $permintaanUp = $data->update([
+            'status' => $request->status,
+        ]);
+
+        if (!$permintaanUp) {
+            Alert::error('Error!', 'Pengajuan ulang gagal.');
+            return back();
+        } else {
+            Alert::success('Success!', 'Pengajuan ulang berhasil.');
+            return back();
+        }
     }
 
     public function filter(Request $request)

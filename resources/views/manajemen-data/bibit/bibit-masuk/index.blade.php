@@ -24,7 +24,7 @@
             </div>
             @endif
         </div>
-    
+
         </div>
         <div class="row">
             <div class="col-12">
@@ -39,6 +39,7 @@
                                         <th>Bibit</th>
                                         <th>Stok</th>
                                         <th>Diinputkan oleh</th>
+                                        <th>Tanggal</th>
                                         @if (auth()->check() && (auth()->user()->level == 'Admin'))
                                         <th>Aksi</th>
                                         @endif
@@ -51,6 +52,7 @@
                                             <td>{{ $bm->bibit->bibit }}</td>
                                             <td>{{ $bm->stok }}</td>
                                             <td>{{ $bm->inputed_by }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($bm->created_at)->format('d-m-Y') }}</td>
                                             @if (auth()->check() && (auth()->user()->level == 'Admin'))
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-bibit-masuk-{{ $bm->id }}"><i class="fa fa-edit"></i></button>
@@ -122,11 +124,19 @@
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
+<<<<<<< HEAD
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label>
+                        <input type="hidden" class="form-control" name="bibit_id" value="{{ $bm->bibit_id }}">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="nama_bibit" value="{{ $bm->bibit->bibit }}">
+                        </div>
+=======
                         <!-- <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label> -->
                         <input type="hidden" class="form-control" name="bibit_id" value="{{ $bm->bibit_id }}">
                         <!-- <div class="col-sm-12">
                             <input type="text" class="form-control" name="nama_bibit" value="{{ $bm->bibit->bibit}}">
                         </div> -->
+>>>>>>> 64b4e2d2cf536cb4d143a360d383702d28a0558a
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Stok</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="stok" value="{{ $bm->stok }}">
