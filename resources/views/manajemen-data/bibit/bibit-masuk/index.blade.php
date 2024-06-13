@@ -24,7 +24,7 @@
             </div>
             @endif
         </div>
-    
+
         </div>
         <div class="row">
             <div class="col-12">
@@ -39,6 +39,7 @@
                                         <th>Bibit</th>
                                         <th>Stok</th>
                                         <th>Diinputkan oleh</th>
+                                        <th>Tanggal</th>
                                         @if (auth()->check() && (auth()->user()->level == 'Admin'))
                                         <th>Aksi</th>
                                         @endif
@@ -51,6 +52,7 @@
                                             <td>{{ $bm->bibit->bibit }}</td>
                                             <td>{{ $bm->stok }}</td>
                                             <td>{{ $bm->inputed_by }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($bm->created_at)->format('d-m-Y') }}</td>
                                             @if (auth()->check() && (auth()->user()->level == 'Admin'))
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-bibit-masuk-{{ $bm->id }}"><i class="fa fa-edit"></i></button>

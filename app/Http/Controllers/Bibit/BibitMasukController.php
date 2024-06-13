@@ -42,19 +42,24 @@ class BibitMasukController extends Controller
         $level = $user->level;
         $now = Carbon::now()->tz('Asia/Jakarta');
 
-        $bmadd = BibitMasuk::create([
-            'bibit_id' => $request->bibit_id,
-            'stok' => $request->stok,
-            'inputed_by' => $level,
-            'created_at' => $now
-        ]);
-
-        if ($bmadd) {
-            Alert::success('Success!', 'Data bibit masuk berhasil ditambahkan.');
-            return redirect()->route('bibit-masuk.index');
-        } else {
+        if ($request->stok < 1) {
             Alert::error('Error!', 'Data bibit masuk gagal ditambahkan.');
             return redirect()->route('bibit-masuk.index');
+        } else {
+            $bmadd = BibitMasuk::create([
+                'bibit_id' => $request->bibit_id,
+                'stok' => $request->stok,
+                'inputed_by' => $level,
+                'created_at' => $now
+            ]);
+
+            if ($bmadd) {
+                Alert::success('Success!', 'Data bibit masuk berhasil ditambahkan.');
+                return redirect()->route('bibit-masuk.index');
+            } else {
+                Alert::error('Error!', 'Data bibit masuk gagal ditambahkan.');
+                return redirect()->route('bibit-masuk.index');
+            }
         }
     }
 

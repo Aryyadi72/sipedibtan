@@ -28,7 +28,7 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <!-- basic table -->
-            
+
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -83,9 +83,7 @@
                                                 <th>Jumlah</th>
                                                 <th>Status</th>
                                                 <th>Catatan</th>
-                                                @if (auth()->check() && (auth()->user()->level == 'Petugas'))
                                                 <th>Aksi</th>
-                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -135,6 +133,13 @@
                                                             </form>
                                                         </div>
                                                     </td>
+                                                    @endif
+                                                    @if ($pm->status == 'Batal')
+                                                        <td>
+                                                            <button type="button" data-toggle="modal" data-target="#edit-pm" class="btn btn-warning btn-rounded"><i class="fa fa-plus"></i> Ajukan Ulang</button>
+                                                        </td>
+                                                    @else
+                                                        <td>-</td>
                                                     @endif
                                                 </tr>
                                             @endforeach
@@ -195,4 +200,39 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    @foreach ($datapm as $pm)
+    <div id="edit-pm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="warning-header-modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-warning">
+                    <h4 class="modal-title" id="warning-header-modalLabel">Ajukan Ulang Permintaan
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                </div>
+                <form action="{{ route('masuk.update', $pm->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Apakah anda ingin mengajukan ulang permintaan ini?</label>
+
+                        <input type="hidden" class="form-control" name="bibit_id" value="{{ $pm->bibit_id }}">
+                        <input type="hidden" class="form-control" name="jumlah" value="{{ $pm->jumlah }}">
+                        <input type="hidden" class="form-control" name="status" value="Masuk">
+                        <input type="hidden" class="form-control" name="users_id" value="{{ auth()->user()->id }}">
+                        <input type="hidden" class="form-control" name="inputed_by" value="{{ $biodata->nama }}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light"
+                            data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-warning">Ya</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @endforeach
+
 @endsection
