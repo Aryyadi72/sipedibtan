@@ -24,45 +24,7 @@
             </div>
             @endif
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{ route('filter.bibit.masuk') }}" method="POST">
-                            @csrf
-                            <div class="form-body">
-                                <div class="form-group row">
-                                    <label class="col-md-2">Filter Data </label>
-                                    <div class="col-md-10">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="date" class="form-control"
-                                                        placeholder="First Input &amp; First Row" name="start_date">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="date" class="form-control"
-                                                        placeholder="Second Input &amp; First Row" name="end_date">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-actions">
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-info">Filter</button>
-                                    <button type="reset" class="btn btn-dark">Reset</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    
         </div>
         <div class="row">
             <div class="col-12">
@@ -160,11 +122,19 @@
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
+<<<<<<< HEAD
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label>
                         <input type="hidden" class="form-control" name="bibit_id" value="{{ $bm->bibit_id }}">
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="nama_bibit" value="{{ $bm->bibit->bibit }}">
                         </div>
+=======
+                        <!-- <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label> -->
+                        <input type="hidden" class="form-control" name="bibit_id" value="{{ $bm->bibit_id }}">
+                        <!-- <div class="col-sm-12">
+                            <input type="text" class="form-control" name="nama_bibit" value="{{ $bm->bibit->bibit}}">
+                        </div> -->
+>>>>>>> 64b4e2d2cf536cb4d143a360d383702d28a0558a
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Stok</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="stok" value="{{ $bm->stok }}">
