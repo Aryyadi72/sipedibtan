@@ -9,6 +9,7 @@ use App\Models\Bibit;
 use DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BibitMasukController extends Controller
 {
@@ -49,6 +50,8 @@ class BibitMasukController extends Controller
             $bmadd = BibitMasuk::create([
                 'bibit_id' => $request->bibit_id,
                 'stok' => $request->stok,
+                'supplier' => $request->supplier,
+                'penerima' => $request->penerima,
                 'inputed_by' => $level,
                 'created_at' => $now
             ]);
@@ -123,5 +126,21 @@ class BibitMasukController extends Controller
             'biodata' => $biodata
         ];
         return view('manajemen-data.bibit.bibit-masuk.index', $data);
+    }
+
+    public function print($id)
+    {
+        $data = DB::table('bibit_masuk')
+            ->join('bibit', 'bibit_masuk.bibit_id', '=', 'bibit.id')
+            ->select('bibit_masuk.*', 'bibit.*')
+            ->where('bibit_masuk.id', $id)
+            ->first();
+
+        $data = [
+            'data' => $data
+        ];
+
+        $pdf = Pdf::loadView('manajemen-data.bibit.bibit-masuk.print', $data);
+        return $pdf->stream();
     }
 }

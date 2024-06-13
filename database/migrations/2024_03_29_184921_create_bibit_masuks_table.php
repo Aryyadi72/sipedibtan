@@ -14,7 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('bibit_id')->index();
             $table->integer('stok');
-            $table->string('inputed_by');
+            $table->string('supplier', 30)->nullable();
+            $table->string('penerima', 30)->nullable();
+            $table->string('inputed_by', 10)->nullable();
             $table->timestamps();
 
             $table->foreign('bibit_id')->references('id')->on('bibit')->onDelete('cascade')->onUpdate('cascade');

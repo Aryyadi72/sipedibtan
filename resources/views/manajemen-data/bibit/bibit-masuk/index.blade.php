@@ -57,6 +57,7 @@
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#edit-bibit-masuk-{{ $bm->id }}"><i class="fa fa-edit"></i></button>
                                                 <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#delete-bibit-masuk-{{ $bm->id }}"><i class="fa fa-trash"></i></button>
+                                                <a href="{{ route('print' , $bm->id ) }}" class="btn btn-secondary btn-circle" target="blank_"><i class="fa fa-file-pdf"></i></a>
                                             </td>
                                             @endif
                                         </tr>
@@ -84,6 +85,7 @@
                 <form action="{{ route('bibit-masuk.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
+
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label>
                         <div class="col-sm-12">
                             <select class="form-control" id="exampleFormControlSelect1" name="bibit_id">
@@ -93,10 +95,22 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Stok</label>
                         <div class="col-sm-12">
                             <input type="number" class="form-control" name="stok">
                         </div>
+
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Nama Pemasok</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="supplier">
+                        </div>
+
+                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Nama Penerima</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="penerima">
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light"
@@ -124,19 +138,11 @@
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
-<<<<<<< HEAD
-                        <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label>
-                        <input type="hidden" class="form-control" name="bibit_id" value="{{ $bm->bibit_id }}">
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" name="nama_bibit" value="{{ $bm->bibit->bibit }}">
-                        </div>
-=======
                         <!-- <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Bibit</label> -->
                         <input type="hidden" class="form-control" name="bibit_id" value="{{ $bm->bibit_id }}">
                         <!-- <div class="col-sm-12">
                             <input type="text" class="form-control" name="nama_bibit" value="{{ $bm->bibit->bibit}}">
                         </div> -->
->>>>>>> 64b4e2d2cf536cb4d143a360d383702d28a0558a
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Stok</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="stok" value="{{ $bm->stok }}">

@@ -14,12 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('bibit_id')->index();
             $table->integer('jumlah');
-            $table->string('pelaksana');
-            $table->string('lokasi');
-            $table->string('keterangan');
+            $table->string('pelaksana', 30);
+            $table->string('lokasi', 30);
+            $table->string('keterangan', 50)->nullable();
             $table->string('foto');
             $table->date('tanggal');
-            $table->string('inputed_by');
+            $table->string('inputed_by', 10);
             $table->timestamps();
 
             $table->foreign('bibit_id')->references('id')->on('bibit')->onDelete('cascade')->onUpdate('cascade');

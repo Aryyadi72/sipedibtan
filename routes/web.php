@@ -57,7 +57,7 @@ Route::post('/check-email', [AuthController::class, 'checkEmail'])->name('check.
 // Logout
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/login');
+    return redirect('/');
 })->name('logout');
 
 // Dashboard
@@ -188,3 +188,5 @@ Route::get('export', [PenanamanController::class, 'export'])->name('penanaman.ex
 Route::post('filter-result', [PenanamanController::class, 'filter_result'])->name('filter.result');
 
 Route::post('submit-request', [LandingController::class, 'submitRequest'])->name('submit-request');
+
+Route::get('print/{id}', [BibitMasukController::class, 'print'])->name('print');

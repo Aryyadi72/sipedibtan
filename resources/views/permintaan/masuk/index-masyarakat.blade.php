@@ -136,7 +136,7 @@
                                                     @endif
                                                     @if ($pm->status == 'Batal')
                                                         <td>
-                                                            <button type="button" data-toggle="modal" data-target="#edit-pm" class="btn btn-warning btn-rounded"><i class="fa fa-plus"></i> Ajukan Ulang</button>
+                                                            <button type="button" data-toggle="modal" data-target="#edit-pm" class="btn btn-warning btn-rounded"><i class="fa fa-sync"></i> Ajukan Ulang</button>
                                                         </td>
                                                     @else
                                                         <td>-</td>

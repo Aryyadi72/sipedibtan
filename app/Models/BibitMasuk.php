@@ -14,7 +14,9 @@ class BibitMasuk extends Model
     protected $fillable = [
         'bibit_id',
         'stok',
-        'inputed_by'
+        'inputed_by',
+        'supplier',
+        'penerima'
     ];
 
     public function bibit()

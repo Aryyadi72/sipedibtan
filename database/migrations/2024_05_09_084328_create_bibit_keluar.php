@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('bibit_id')->index();
             $table->date('tanggal');
             $table->integer('jumlah');
-            $table->string('keterangan');
-            $table->string('inputed_by');
+            $table->string('keterangan', 50);
+            $table->string('inputed_by', 10);
             $table->timestamps();
 
             $table->foreign('bibit_id')->references('id')->on('bibit')->onDelete('cascade')->onUpdate('cascade');

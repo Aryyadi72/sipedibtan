@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('users_id')->index();
             $table->unsignedBigInteger('permintaan_masuk_id')->index();
-            $table->string('catatan');
+            $table->string('catatan', 30)->nullable();
             $table->timestamps();
 
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

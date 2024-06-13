@@ -12,8 +12,10 @@ return new class extends Migration {
     {
         Schema::create('bibit', function (Blueprint $table) {
             $table->id();
-            $table->string('bibit');
-            $table->string('inputed_by');
+            $table->string('bibit', 10);
+            $table->string('foto')->nullable();
+            $table->string('deskripsi', 50)->nullable();
+            $table->string('inputed_by', 10)->nullable();
             $table->timestamps();
         });
     }
