@@ -13,7 +13,7 @@ class BiodataSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
+        DB::table('biodata')->insert([
             [
                 'users_id' => 1,
                 'nama' => 'Admin',
