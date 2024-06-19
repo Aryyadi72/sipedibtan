@@ -111,7 +111,7 @@
                                                         </td>
                                                     @endif
                                                     @php
-                                                        $catatan = \App\Models\PermintaanKeluar::where('permintaan_masuk_id', $pm->id)->first();
+                                                        $catatan = \App\Models\PermintaanKeluar::where('permintaan_masuk_id', $pm->masuk_id)->first();
                                                     @endphp
                                                     @if ($catatan == null || $pm->status != 'Batal')
                                                         <td>-</td>
@@ -136,7 +136,7 @@
                                                     @endif
                                                     @if ($pm->status == 'Batal')
                                                         <td>
-                                                            <button type="button" data-toggle="modal" data-target="#edit-pm" class="btn btn-warning btn-rounded"><i class="fa fa-sync"></i> Ajukan Ulang</button>
+                                                            <button type="button" data-toggle="modal" data-target="#edit-pm-{{ $pm->masuk_id }}" class="btn btn-warning btn-rounded"><i class="fa fa-sync"></i> Ajukan Ulang</button>
                                                         </td>
                                                     @else
                                                         <td>-</td>
@@ -202,7 +202,7 @@
     </div><!-- /.modal -->
 
     @foreach ($datapm as $pm)
-    <div id="edit-pm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="warning-header-modalLabel" aria-hidden="true">
+    <div id="edit-pm-{{ $pm->masuk_id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="edit-pm-{{ $pm->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-warning">
@@ -211,13 +211,14 @@
                     <button type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">×</button>
                 </div>
-                <form action="{{ route('masuk.update', $pm->id) }}" method="POST">
+                <form action="{{ route('masuk.update', $pm->masuk_id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
 
                         <label for="inputHorizontalSuccess" class="col-sm-12 col-form-label">Apakah anda ingin mengajukan ulang permintaan ini?</label>
 
+                        <input type="hidden" class="form-control" name="id" value="{{ $pm->masuk_id }}">
                         <input type="hidden" class="form-control" name="bibit_id" value="{{ $pm->bibit_id }}">
                         <input type="hidden" class="form-control" name="jumlah" value="{{ $pm->jumlah }}">
                         <input type="hidden" class="form-control" name="status" value="Masuk">

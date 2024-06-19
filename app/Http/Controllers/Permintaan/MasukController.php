@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Permintaan;
 
 use App\Http\Controllers\Controller;
 use App\Models\PermintaanMasuk;
+use App\Models\PermintaanKeluar;
 use Illuminate\Http\Request;
 use App\Models\Bibit;
 use App\Models\BibitKeluar;
@@ -174,6 +175,8 @@ class MasukController extends Controller
         $permintaanUp = $data->update([
             'status' => $request->status,
         ]);
+
+        $permintaanKeluar = PermintaanKeluar::where('permintaan_masuk_id', $id)->delete();
 
         if (!$permintaanUp) {
             Alert::error('Error!', 'Pengajuan ulang gagal.');
